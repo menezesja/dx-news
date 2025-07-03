@@ -1,3 +1,5 @@
+Weekly report link: https://docs.google.com/document/d/1iwMwvjRA2rZ0adiNXV3r2FDKwVWpnaurKaA_y07p4RA/edit?tab=t.0
+
 # DxNews
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
