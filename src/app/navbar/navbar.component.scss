@@ -1,0 +1,25 @@
+.header {
+  background-color: #252530; /* Cor de fundo desejada */
+  color: white; /* Cor do texto */
+  padding: 15px 20px; /* Preenchimento interno */
+  display: flex; /* Usar flexbox para alinhar itens */
+  justify-content: space-between; /* Alinha o conteúdo da esquerda e direita nas extremidades */
+  align-items: center; /* Centraliza verticalmente os itens */
+  width: 100%; /* Garante que o cabeçalho ocupe toda a largura */
+  box-sizing: border-box; /* Garante que padding não adicione largura */
+}
+
+.header-left {
+  font-size: 1.8em; /* Ajuste o tamanho da fonte do texto "DX NEWS" */
+  font-weight: bold; /* Deixa o texto em negrito */
+  /* Se quiser uma fonte específica, adicione aqui */
+  // font-family: 'Arial', sans-serif;
+}
+
+.header-right {
+  img {
+    height: 40px; /* Ajuste a altura da sua logo conforme necessário */
+    /* Você pode adicionar largura ou outras propriedades se a logo estiver distorcendo */
+    // width: auto;
+  }
+}
