@@ -3,102 +3,101 @@ $color_bk_login: #ffffff;
 $color_btn: #a50034;
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Open Sans', sans-serif;
-  background-color: $color_bk;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: $color_bk;
 }
 
 .page-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: $color_bk;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: $color_bk;
 }
 
 // LOGIN BOX ESTILO RETANGULAR
 .login-container {
-  background-color: $color_bk_login;
-  width: 350px;
-  margin: auto;
-  margin-top: 10vh;
-  padding: 3rem 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-  text-align: center;
+    background-color: $color_bk_login;
+    width: 350px;
+    margin: auto;
+    padding: 3rem 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .logo {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 2rem;
-  object-fit: cover;
-  border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 2rem;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 // FORMULÁRIO COM INPUTS NO ESTILO "UNDERLINE"
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 
-  input {
-    border: none;
-    border-bottom: 1px solid #999;
-    background: transparent;
-    padding: 0.4rem 0;
-    font-size: 1rem;
-    color: #333;
+    input {
+        border: none;
+        border-bottom: 1px solid #999;
+        background: transparent;
+        padding: 0.4rem 0;
+        font-size: 1rem;
+        color: #333;
 
-    &::placeholder {
-      color: #aaa;
-      font-weight: 400;
+        &::placeholder {
+        color: #aaa;
+        font-weight: 400;
+        }
+
+        &:focus {
+        outline: none;
+        border-bottom: 2px solid $color_btn;
+        }
     }
 
-    &:focus {
-      outline: none;
-      border-bottom: 2px solid $color_btn;
-    }
-  }
+    button {
+        margin-top: 1rem;
+        padding: 0.75rem 1.2rem; 
+        font-size: 1rem;
+        font-weight: 600;
+        background-color: $color_btn; 
+        color: #fff;
+        border: none;
+        border-radius: 999px; // deixa o botão completamente oval
+        cursor: pointer;
+        transition: background-color 0.3s ease;
 
-  button {
-    margin-top: 1rem;
-    padding: 0.75rem;
-    font-size: 1rem;
-    font-weight: 600;
-    background-color: $color_btn;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: darken($color_btn, 6%);
+        &:hover {
+            background-color: darken($color_btn, 6%);
+        }
     }
-  }
 }
 
 // FOOTER
 footer {
-  background-color: #e6e6e6;
-  padding: 1rem 2rem;
-  border-top: 1px solid #ccc;
+    background-color: #e6e6e6;
+    padding: 1rem 2rem;
+    border-top: 1px solid #ccc;
 
-  .footer-content {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
+    .footer-content {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
 
-  .footer-logo {
-    height: 36px;
-    width: auto;
-  }
+    .footer-logo {
+        height: 36px;
+        width: auto;
+    }
 
-  .footer-text {
-    font-size: 0.9rem;
-    color: #444;
-    white-space: nowrap;
-  }
+    .footer-text {
+        font-size: 0.9rem;
+        color: #444;
+        white-space: nowrap;
+    }
 }
