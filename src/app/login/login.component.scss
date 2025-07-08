@@ -50,13 +50,13 @@ form {
         color: #333;
 
         &::placeholder {
-        color: #aaa;
-        font-weight: 400;
+            color: #aaa;
+            font-weight: 400;
         }
 
         &:focus {
-        outline: none;
-        border-bottom: 2px solid $color_btn;
+            outline: none;
+            border-bottom: 2px solid $color_btn;
         }
     }
 
@@ -80,9 +80,9 @@ form {
 
 // FOOTER
 footer {
-    background-color: #e6e6e6;
+    background-color: $color_bk_login;
     padding: 1rem 2rem;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid $color_bk;
 
     .footer-content {
         display: flex;
