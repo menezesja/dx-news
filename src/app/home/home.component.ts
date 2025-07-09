@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'; // Importe CommonModule se já n
 import { Router } from '@angular/router'; // Adicione RouterLink e RouterOutlet
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
+import { NewsService } from '../service/news.service';
 
 @Component({
   selector: 'app-home',
@@ -16,14 +17,20 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  constructor(private router: Router) {}
-
-  tags: string[] = ['WORKSHOP', 'VISITS', 'DX ACADEMY', 'DX DAY', 'PRODUCTION'];
+  constructor(private router: Router, private newsService: NewsService) {}
 
   selectedTag: string = ''; // Nenhuma selecionada por padrão
   searchQuery: string = '';
   currentPage: number = 1;
   itemsPerPage: number = 4;
+
+  tags: string[] = [];
+  hotNews: any[] = [];
+
+  ngOnInit(): void {
+    this.tags = this.newsService.tags;
+    this.hotNews = this.newsService.getHotNews(this.newsItems);
+  }
 
   newsItems = [
     {
@@ -68,41 +75,24 @@ export class HomeComponent {
     }
   ];
 
-  // Seleciona as 3 notícias com mais visualizações para destaque
-  hotNews = [...this.newsItems]
-    .sort((a, b) => b.views - a.views)
-    .slice(0, 3);
-
   //Filtro dinâmico: por tag e busca por texto
   get filteredNews() {
-    let filtered = !this.selectedTag
-      ? this.newsItems
-      : this.newsItems.filter(news => news.category === this.selectedTag);
+    return this.newsService.filterNews(this.newsItems, this.selectedTag, this.searchQuery);
+  }
 
-    if (this.searchQuery.trim()) {
-      filtered = filtered.filter(news =>
-        news.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        news.description.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-    }
-    return filtered;
+  //Retorna as notícias paginadas com base na página atual
+  get paginatedNews() {
+    return this.newsService.paginate(this.filteredNews, this.currentPage, this.itemsPerPage);
+  }
+
+  //Calcula o total de páginas para a navegação
+  get totalPages(): number {
+    return this.newsService.getTotalPages(this.filteredNews, this.itemsPerPage);
   }
 
   //Alterna a seleção da tag clicada
   selectTag(tag: string) {
     this.selectedTag = this.selectedTag === tag ? '' : tag;
-  }
-
-  //Retorna as notícias paginadas com base na página atual
-  get paginatedNews() {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.filteredNews.slice(start, end);
-  }
-
-  //Calcula o total de páginas para a navegação
-  get totalPages(): number {
-    return Math.ceil(this.filteredNews.length / this.itemsPerPage);
   }
 
   //Troca a página atual dentro dos limites válidos
