@@ -13,5 +13,5 @@ import { NavbarComponent } from '../navbar/navbar.component';
   styleUrl: './news.component.scss'
 })
 export class NewsComponent {
-
+  
 }

@@ -1,7 +1,63 @@
 <app-navbar></app-navbar>
-<p>Tela de Notícias works!</p>
+<div class="news-container">
+  <div class="filters">
+    <button
+      class="tag"
+      *ngFor="let tag of tags"
+      [class.active]="selectedTag === tag"
+      (click)="selectTag(tag)">
+      {{ tag }}
+    </button>
 
-<nav>
+    <input
+      class="search-bar"
+      type="text"
+      placeholder="Buscar notícia..."
+      [(ngModel)]="searchQuery" />
+  </div>
+
+  <div class="content">
+    <div class="news-list">
+      <div class="news-card" *ngFor="let news of paginatedNews" (click)="goToNews(news)">
+        <img class="news-image" [src]="news.imageUrl" alt="News image" />
+        <div class="news-info">
+          <h3>
+            {{ news.title }}
+            <span class="date">{{ news.date }}</span>
+          </h3>
+          <p>{{ news.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hot-news">
+      <h2>
+        Hot News 
+        <img src="assets/logo-hotnews.svg" alt="Hot News Icon" class="icon-hot" />
+      </h2>
+      <div class="hot-news-box">
+        <div class="news-card" *ngFor="let hot of hotNews" (click)="goToNews(hot)">
+          <img class="news-image" [src]="hot.imageUrl" alt="News image" />
+          <div class="news-info">
+            <h3>
+              {{ hot.title }}
+              <span class="date">{{ hot.date }}</span>
+            </h3>
+            <p>{{ hot.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">← Previous</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next →</button>
+  </div>
+</div>
+
+<!-- <nav>
   <ul>
     <li><a routerLink="/admin/authors">Gerenciar Autores</a></li>
     <li><a routerLink="/admin/news">Gerenciar Notícias</a></li>
@@ -10,4 +66,4 @@
     <li><a routerLink="/login">Tela de Login</a></li>
     <li><a routerLink="/news">Notícia</a></li>
   </ul>
-</nav>
+</nav> -->

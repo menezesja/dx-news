@@ -2,6 +2,8 @@ $color_bk: #d9d9d9;
 $color_bk_login: #ffffff;
 $color_btn: #a50034;
 
+@use "sass:color";
+
 body {
     margin: 0;
     padding: 0;
@@ -73,7 +75,7 @@ form {
         transition: background-color 0.3s ease;
 
         &:hover {
-            background-color: darken($color_btn, 6%);
+            background-color: color.adjust($color_btn, $lightness: -6%);
         }
     }
 }
