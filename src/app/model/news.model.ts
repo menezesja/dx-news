@@ -6,4 +6,6 @@ export interface NewsItem {
     category: string;
     views: number;
     imageUrl: string;
+    author?: string;
+    content?: string; //texto da notícia
 }

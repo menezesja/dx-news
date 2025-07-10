@@ -15,6 +15,6 @@ export const routes: Routes = [
   { path: 'author/create-news', component: CreateNewsComponent },    
   { path: 'author/controller-news', component: ControllerNewsComponent },    
   { path: 'login', component: LoginComponent },    
-  { path: 'news', component: NewsComponent },    
+  { path: 'news/:id', component: NewsComponent },    
   // ... outras rotas que você possa ter
 ];
