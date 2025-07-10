@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importe CommonModule se já não estiver
-import { Router } from '@angular/router'; // Adicione RouterLink e RouterOutlet
+import { Router, ActivatedRoute } from '@angular/router'; // Adicione RouterLink e RouterOutlet
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { NewsItem } from '../model/news.model';
@@ -19,8 +19,6 @@ import { NewsService } from '../service/news.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  constructor(private router: Router, private newsService: NewsService, private dataSource: MockNewsService) {}
-
   selectedTag: string = ''; // Nenhuma selecionada por padrão
   searchQuery: string = '';
   currentPage: number = 1;
@@ -30,10 +28,24 @@ export class HomeComponent {
   newsItems: NewsItem[] = [];
   hotNews: NewsItem[] = [];
 
+  constructor(
+    private router: Router, 
+    private newsService: NewsService, 
+    private dataSource: MockNewsService,
+    private route: ActivatedRoute
+  ) {}
+
+  
   ngOnInit(): void {
     this.tags = this.newsService.tags;
     this.newsItems = this.dataSource.newsItems();
     this.hotNews = this.newsService.getHotNews(this.newsItems);
+
+    this.route.queryParams.subscribe(params => {
+      if (params['tag']) {
+        this.selectedTag = params['tag'];
+      }
+    });
   }
 
   //Filtro dinâmico: por tag e busca por texto
@@ -65,6 +77,6 @@ export class HomeComponent {
 
   //Navega para o componente /news, enviando dados da notícia selecionada via state
   goToNews(news: NewsItem): void {
-    this.router.navigate(['news'], { state: { data: news } });
+    this.router.navigate(['news', news.id]);
   }
 }
