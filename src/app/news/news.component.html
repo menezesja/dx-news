@@ -21,8 +21,26 @@
     </div>
     <img [src]="selectedNews.imageUrl" alt="{{ selectedNews.title }}" class="news-image" />
     <p class="news-content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+      {{ textoAleatorio }}
     </p>
+
+    <div class="news-footer">
+      <div class="footer-line"></div>
+      <div class="footer-actions">
+        <div class="rating">
+          <span class="star filled"></span>
+          <span class="star filled"></span>
+          <span class="star filled"></span>
+          <span class="star filled"></span>
+          <span class="star"></span>
+          <span class="rating-count">4,1k</span>
+        </div>
+
+        <button class="share-button">
+          <img src="assets/share.svg" alt="Compartilhar">
+        </button>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="!selectedNews">
