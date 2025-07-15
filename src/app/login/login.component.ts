@@ -18,12 +18,12 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin(): void {
-    const isValid = this.authService.login(this.username, this.password);
-
-    if (isValid) {
-      this.router.navigateByUrl('/author/controller-news');
-    } else {
-      alert('Usuário ou senha inválidos');
-    }
+    this.authService.login(this.username, this.password).subscribe((isValid) => {
+      if (isValid) {
+        this.router.navigateByUrl('/author/controller-news');
+      } else {
+        alert('Usuário ou senha inválidos');
+      }
+    });
   }
 }
