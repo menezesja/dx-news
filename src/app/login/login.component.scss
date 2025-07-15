@@ -1,6 +1,7 @@
 $color_bk: #d9d9d9;
 $color_bk_login: #ffffff;
 $color_btn: #a50034;
+$color_link: #B0B0B0;
 
 @use "sass:color";
 
@@ -76,6 +77,18 @@ form {
 
         &:hover {
             background-color: color.adjust($color_btn, $lightness: -6%);
+        }
+    }
+
+    .register-link {
+        margin-top: auto;
+        font-size: 1rem;
+        color: $color_link;
+        text-decoration: none;
+        align-self: center;
+
+        &:hover {
+            text-decoration: underline;
         }
     }
 }
