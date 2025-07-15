@@ -20,6 +20,10 @@ export class RegistrationComponent {
 
   onRegister(): void {
     this.authService.register(this.username, this.email, this.password).subscribe((success) => {
+      if (!this.username.trim() || !this.email.trim() || !this.password.trim()) {
+        alert('Todos os campos são obrigatórios. Por favor, preencha corretamente.');
+        return;
+      }
       if (success) {
         alert('Cadastro realizado com sucesso!');
         this.router.navigateByUrl('/login');

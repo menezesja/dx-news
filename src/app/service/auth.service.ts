@@ -31,6 +31,11 @@ export class AuthService {
   register(username: string, email: string, password: string): Observable<boolean> {
     const users = this.getRegisteredUsers();
 
+    // Verifica campos obrigatórios antes de prosseguir
+    if (!username || !email || !password) {
+      return of(false); // Falha por campos vazios
+    }
+
     // Verifica se nome ou email já existem
     const alreadyExists = users.some(user =>
       user.username === username || user.email === email
