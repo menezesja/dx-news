@@ -19,8 +19,8 @@ body {
     background-color: $color_bk;
 }
 
-// LOGIN BOX ESTILO RETANGULAR
-.login-container {
+// SINGUP BOX ESTILO RETANGULAR
+.signup-container {
     background-color: $color_bk_login;
     width: 350px;
     margin: auto;
@@ -80,7 +80,7 @@ form {
         }
     }
 
-    .register-link {
+    .login-link {
         margin-top: auto;
         font-size: 1rem;
         color: $color_link;

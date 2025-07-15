@@ -6,6 +6,7 @@ import { CreateNewsComponent } from '../author/create-news/create-news.component
 import { ControllerNewsComponent } from '../author/controller-news/controller-news.component';
 import { LoginComponent } from '../login/login.component';
 import { NewsComponent } from '../news/news.component';
+import { RegistrationComponent } from '../registration/registration.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'author/create-news', component: CreateNewsComponent },    
   { path: 'author/controller-news', component: ControllerNewsComponent },    
   { path: 'login', component: LoginComponent },    
-  { path: 'news/:id', component: NewsComponent },    
+  { path: 'news/:id', component: NewsComponent }, 
+  { path: 'singup', component: RegistrationComponent }   
   // ... outras rotas que você possa ter
 ];
