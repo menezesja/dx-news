@@ -1,44 +1,39 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importe CommonModule se já não estiver
-import { Router, ActivatedRoute } from '@angular/router'; // Adicione RouterLink e RouterOutlet
-import { NavbarComponent } from '../navbar/navbar.component';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../navbar/navbar.component';
 import { NewsItem } from '../model/news.model';
-import { MockNewsService } from '../service/mock-news.service';
-import { NewsService } from '../service/news.service';
+import { AbstractNewsService } from '../service/abstract-news.service';
 
 @Component({
   selector: 'app-home',
-  standalone: true, // Ou module: ..., se não for standalone
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
-    NavbarComponent // Adicione RouterLink aqui
+    NavbarComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  selectedTag: string = ''; // Nenhuma selecionada por padrão
-  searchQuery: string = '';
-  currentPage: number = 1;
-  itemsPerPage: number = 4;
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private newsService = inject(AbstractNewsService); 
+
+  selectedTag = '';
+  searchQuery = '';
+  currentPage = 1;
+  itemsPerPage = 4;
 
   tags: string[] = [];
   newsItems: NewsItem[] = [];
   hotNews: NewsItem[] = [];
 
-  constructor(
-    private router: Router, 
-    private newsService: NewsService, 
-    private dataSource: MockNewsService,
-    private route: ActivatedRoute
-  ) {}
-
-  
   ngOnInit(): void {
     this.tags = this.newsService.tags;
-    this.newsItems = this.dataSource.newsItems();
+    this.newsItems = this.newsService.newsItems();
     this.hotNews = this.newsService.getHotNews(this.newsItems);
 
     this.route.queryParams.subscribe(params => {
@@ -48,34 +43,34 @@ export class HomeComponent {
     });
   }
 
-  //Filtro dinâmico: por tag e busca por texto
-  get filteredNews() {
+  get filteredNews(): NewsItem[] {
     return this.newsService.filterNews(this.newsItems, this.selectedTag, this.searchQuery);
   }
 
-  //Retorna as notícias paginadas com base na página atual
-  get paginatedNews() {
+  get paginatedNews(): NewsItem[] {
     return this.newsService.paginate(this.filteredNews, this.currentPage, this.itemsPerPage);
   }
 
-  //Calcula o total de páginas para a navegação
   get totalPages(): number {
     return this.newsService.getTotalPages(this.filteredNews, this.itemsPerPage);
   }
 
-  //Alterna a seleção da tag clicada
   selectTag(tag: string): void {
     this.selectedTag = this.selectedTag === tag ? '' : tag;
   }
 
-  //Troca a página atual dentro dos limites válidos
+  onSearchChange(): void {
+    if (this.searchQuery.trim().length > 0) {
+      this.selectedTag = '';
+    }
+  }
+
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
     }
   }
 
-  //Navega para o componente /news, enviando dados da notícia selecionada via state
   goToNews(news: NewsItem): void {
     this.router.navigate(['news', news.id]);
   }
