@@ -1,8 +1,9 @@
 import { Injectable, Signal, computed, signal } from '@angular/core';
 import { NewsItem } from '../model/news.model';
+import { AbstractNewsService } from './abstract-news.service';
 
-@Injectable({ providedIn: 'root' })
-export class MockNewsService {
+@Injectable()
+export class MockNewsService extends AbstractNewsService{
   private _newsItems = signal<NewsItem[]>([
     {
         id: 1,
@@ -57,4 +58,29 @@ export class MockNewsService {
   ]);
   
   newsItems: Signal<NewsItem[]> = computed(() => this._newsItems());
+  tags: string[] = ['WORKSHOP', 'VISITS', 'DX ACADEMY', 'DX DAY', 'PRODUCTION']; // Implementação obrigatória da propriedade abstrata
+
+  override filterNews(newsItems: NewsItem[], tag: string, query: string): NewsItem[] {
+    let filtered = !tag ? newsItems : newsItems.filter(n => n.category === tag);
+    if (query.trim()) {
+      filtered = filtered.filter(n =>
+        n.title.toLowerCase().includes(query.toLowerCase()) ||
+        n.description.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+    return filtered;
+  }
+
+  override paginate(news: NewsItem[], currentPage: number, itemsPerPage: number): NewsItem[] {
+    const start = (currentPage - 1) * itemsPerPage;
+    return news.slice(start, start + itemsPerPage);
+  }
+  
+  override getHotNews(newsItems: NewsItem[]): NewsItem[] {
+    return [...newsItems].sort((a, b) => b.views - a.views).slice(0, 3);
+  }
+
+  override getTotalPages(filtered: NewsItem[], itemsPerPage: number): number {
+    return Math.ceil(filtered.length / itemsPerPage);
+  }
 }
