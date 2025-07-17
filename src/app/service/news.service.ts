@@ -1,30 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal, computed, signal } from '@angular/core';
+import { AbstractNewsService } from './abstract-news.service';
+import { environment } from '../../../environments/environments';
+import { NewsItem } from '../model/news.model';
+import { HttpClient } from '@angular/common/http';
 
-@Injectable({ providedIn: 'root' })
-export class NewsService {
-    readonly tags: string[] = ['WORKSHOP', 'VISITS', 'DX ACADEMY', 'DX DAY', 'PRODUCTION'];
+@Injectable()
+export class NewsService  extends AbstractNewsService {
+    override tags!: string[];
+    override newsItems!: Signal<NewsItem[]>;
 
-    filterNews(newsItems: any[], tag: string, query: string): any[] {
-        let filtered = !tag ? newsItems : newsItems.filter(n => n.category === tag);
-        if (query.trim()) {
-        filtered = filtered.filter(n =>
-            n.title.toLowerCase().includes(query.toLowerCase()) ||
-            n.description.toLowerCase().includes(query.toLowerCase())
-        );
-        }
-        return filtered;
+    override filterNews(newsItems: NewsItem[], tag: string, query: string): NewsItem[] {
+        throw new Error('Method not implemented.');
     }
 
-    paginate(news: any[], currentPage: number, itemsPerPage: number): any[] {
-        const start = (currentPage - 1) * itemsPerPage;
-        return news.slice(start, start + itemsPerPage);
+    override paginate(news: NewsItem[], currentPage: number, itemsPerPage: number): NewsItem[] {
+        throw new Error('Method not implemented.');
+    }
+    
+    override getHotNews(newsItems: NewsItem[]): NewsItem[] {
+        throw new Error('Method not implemented.');
     }
 
-    getHotNews(newsItems: any[]): any[] {
-        return [...newsItems].sort((a, b) => b.views - a.views).slice(0, 3);
-    }
-
-    getTotalPages(filtered: any[], itemsPerPage: number): number {
-        return Math.ceil(filtered.length / itemsPerPage);
+    override getTotalPages(filtered: NewsItem[], itemsPerPage: number): number {
+        throw new Error('Method not implemented.');
     }
 }
