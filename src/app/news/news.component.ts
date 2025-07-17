@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { NewsService } from '../service/news.service';
-import { MockNewsService } from '../service/mock-news.service';
 import { ShortNumberPipe } from './short-number.pipe';
 import { NewsItem } from '../model/news.model';
+import { AbstractNewsService } from '../service/abstract-news.service';
 
 @Component({
   selector: 'app-news.component',
@@ -19,28 +18,25 @@ import { NewsItem } from '../model/news.model';
   styleUrl: './news.component.scss'
 })
 export class NewsComponent {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private newsService = inject(AbstractNewsService); // ✅ injetando via abstração
+
   selectedNews?: NewsItem;
   selectedRelatedNews?: NewsItem;
   selectedTag: string = '';
   tags: string[] = [];
-  textoAleatorio: string = ''; //teste de texto (remover)
-
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private newsService: NewsService,
-    private mockNewsService: MockNewsService
-  ) {}
+  textoAleatorio: string = ''; // teste temporário
 
   ngOnInit(): void {
     this.tags = this.newsService.tags;
-    this.textoAleatorio = this.gerarTextoLongo(); //teste de texto (remover)
+    this.textoAleatorio = this.gerarTextoLongo(); // teste temporário
 
     const newsIdParam = this.route.snapshot.paramMap.get('id');
     const newsId = newsIdParam ? parseInt(newsIdParam, 10) : null;
 
     if (newsId !== null) {
-      const allNews = this.mockNewsService.newsItems();
+      const allNews = this.newsService.newsItems();
       this.selectedNews = allNews.find(news => news.id === newsId);
 
       if (!this.selectedNews) {
@@ -56,7 +52,7 @@ export class NewsComponent {
       this.router.navigate(['home'], { queryParams: { tag } });
     });
   }
-
+  
   //teste de texto (remover)
   gerarTextoLongo(): string {
     return `
