@@ -102,11 +102,13 @@ export class MockNewsService extends AbstractNewsService{
     );
   }
 
+  //salva avaliação por estrelas
   override updateRating(newsId: number, stars: number): void {
     const key = `rating-user-${newsId}`;
     localStorage.setItem(key, stars.toString());
   }
 
+  //recupera avaliação salva
   override getRating(newsId: number): number {
     return parseInt(localStorage.getItem(`rating-user-${newsId}`) || '0', 10);
   }

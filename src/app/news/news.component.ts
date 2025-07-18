@@ -63,6 +63,14 @@ export class NewsComponent {
       this.rating = stars;
     }
   }
+
+  shareNews(): void {
+    if (this.selectedNews) {
+      const url = `${window.location.origin}/news/${this.selectedNews.id}`;
+      navigator.clipboard.writeText(url);
+      alert('🔗 Link da notícia copiado!');
+    }
+  }
   
   // teste temporário
   gerarTextoLongo(): string {
