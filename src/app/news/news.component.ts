@@ -45,6 +45,10 @@ export class NewsComponent {
     } else {
       this.router.navigate(['/']);
     }
+
+    if (this.selectedNews) {
+      this.newsService.updateViews(this.selectedNews.id);
+    }
   }
 
   goToTag(tag: string): void {
