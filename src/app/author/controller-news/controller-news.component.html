@@ -1,2 +1,25 @@
 <app-navbar></app-navbar>
-<p>Controle de Notícias do Author works!</p>
+<div class="home-container">
+    <div class="welcome-section">
+      <span class="welcome-text">Welcome, {{ userName }}</span>
+      <mat-icon class="user-icon">person</mat-icon> </div>
+  
+    <div class="main-content">
+      <div class="news-draft-list">
+        <div class="news-draft-card" *ngFor="let draft of newsDrafts" (click)="viewDraft(draft.id)">
+          <div class="card-image">
+            <mat-icon>image</mat-icon> </div>
+          <div class="card-details">
+            <span class="card-title">{{ draft.title || '(Title)' }}</span>
+            <span class="card-status">{{ draft.status }}</span>
+            <span class="card-author">{{ draft.author }}</span>
+            <mat-icon class="edit-icon">edit</mat-icon>
+            <span class="views">15k <mat-icon>bar_chart</mat-icon></span> </div>
+        </div>
+      </div>
+    </div>
+  
+    <button class="fab-button" (click)="goToCreateNews()">
+        <mat-icon>add</mat-icon>
+    </button>
+  </div>

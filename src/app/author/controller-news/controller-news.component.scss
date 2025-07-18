@@ -1,0 +1,65 @@
+.home-container {
+    padding: 20px;
+    position: relative; // Necessário para posicionar o botão FAB
+    min-height: calc(100vh - 60px); // Ajuste 60px para a altura da sua navbar se ela estiver no AppComponent
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .welcome-section {
+    display: flex;
+    justify-content: flex-end; // Alinha à direita
+    align-items: center;
+    margin-bottom: 20px; // Espaço abaixo da seção de boas-vindas
+    gap: 10px; // Espaço entre o texto e o ícone
+    padding-right: 20px; // Alinha o conteúdo à direita, considerando o padding do container
+  }
+  
+  .welcome-text {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #333; // Cor do texto, ajuste se necessário
+  }
+  
+  .user-icon {
+    font-size: 24px; // Tamanho do ícone
+    color: #333; // Cor do ícone
+  }
+  
+  .main-content {
+    flex-grow: 1; // Permite que o conteúdo principal ocupe o espaço restante
+    // Adicione seus estilos para o conteúdo aqui
+  }
+  
+  .fab-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #A00030;
+    color: white;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    mat-icon {
+      font-size: 34px;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%; 
+      height: 100%;
+    }
+  
+    &:hover {
+      background-color: #B00040;
+    }
+  }
