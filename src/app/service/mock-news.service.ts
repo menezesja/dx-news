@@ -102,5 +102,13 @@ export class MockNewsService extends AbstractNewsService{
     );
   }
 
+  override updateRating(newsId: number, stars: number): void {
+    const key = `rating-user-${newsId}`;
+    localStorage.setItem(key, stars.toString());
+  }
+
+  override getRating(newsId: number): number {
+    return parseInt(localStorage.getItem(`rating-user-${newsId}`) || '0', 10);
+  }
 
 }

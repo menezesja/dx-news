@@ -28,4 +28,12 @@ export class NewsService  extends AbstractNewsService {
     override updateViews(newsId: number): void {
         throw new Error('Method not implemented.');
     }
+
+    override updateRating(newsId: number, stars: number): void {
+        throw new Error('Method not implemented.');
+    }
+
+    override getRating(newsId: number): number {
+        throw new Error('Method not implemented.');
+    }
 }
