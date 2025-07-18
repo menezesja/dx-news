@@ -12,7 +12,7 @@ export class MockNewsService extends AbstractNewsService{
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
         category: 'DX ACADEMY',
-        views: 2341,
+        views: 900,
         imageUrl: 'https://picsum.photos/seed/hyperautomation/100',
     },
     {
@@ -32,7 +32,7 @@ export class MockNewsService extends AbstractNewsService{
         description:
             'Explore the latest robotic technologies. The tour included demonstrations of autonomous systems. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
         category: 'VISITS',
-        views: 3120,
+        views: 1120,
         imageUrl: 'https://picsum.photos/seed/robotics/100',
     },
     {
@@ -83,4 +83,34 @@ export class MockNewsService extends AbstractNewsService{
   override getTotalPages(filtered: NewsItem[], itemsPerPage: number): number {
     return Math.ceil(filtered.length / itemsPerPage);
   }
+
+  //contabiliza visualizações
+  override updateViews(newsId: number): void {
+    const localKey = `views-extra-${newsId}`;
+    const extraViews = parseInt(localStorage.getItem(localKey) || '0', 10) + 1;
+
+    localStorage.setItem(localKey, extraViews.toString());
+
+    const originalNews = this._newsItems().find(n => n.id === newsId);
+    const baseViews = originalNews?.views || 0;
+    const totalViews = baseViews + extraViews;
+
+    this._newsItems.update(items =>
+      items.map(item =>
+        item.id === newsId ? { ...item, views: totalViews } : item
+      )
+    );
+  }
+
+  //salva avaliação por estrelas
+  override updateRating(newsId: number, stars: number): void {
+    const key = `rating-user-${newsId}`;
+    localStorage.setItem(key, stars.toString());
+  }
+
+  //recupera avaliação salva
+  override getRating(newsId: number): number {
+    return parseInt(localStorage.getItem(`rating-user-${newsId}`) || '0', 10);
+  }
+
 }

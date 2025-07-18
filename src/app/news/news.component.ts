@@ -27,6 +27,7 @@ export class NewsComponent {
   selectedTag: string = '';
   tags: string[] = [];
   textoAleatorio: string = ''; // teste temporário
+  rating: number = 0;
 
   ngOnInit(): void {
     this.tags = this.newsService.tags;
@@ -39,7 +40,10 @@ export class NewsComponent {
       const allNews = this.newsService.newsItems();
       this.selectedNews = allNews.find(news => news.id === newsId);
 
-      if (!this.selectedNews) {
+      if (this.selectedNews) {
+        this.newsService.updateViews(this.selectedNews.id);
+        this.rating = this.newsService.getRating(this.selectedNews.id);
+      } else {
         this.router.navigate(['/']);
       }
     } else {
@@ -52,8 +56,23 @@ export class NewsComponent {
       this.router.navigate(['home'], { queryParams: { tag } });
     });
   }
+
+  setRating(stars: number): void {
+    if (this.selectedNews) {
+      this.newsService.updateRating(this.selectedNews.id, stars);
+      this.rating = stars;
+    }
+  }
+
+  shareNews(): void {
+    if (this.selectedNews) {
+      const url = `${window.location.origin}/news/${this.selectedNews.id}`;
+      navigator.clipboard.writeText(url);
+      alert('🔗 Link da notícia copiado!');
+    }
+  }
   
-  //teste de texto (remover)
+  // teste temporário
   gerarTextoLongo(): string {
     return `
       Em um cenário de constantes transformações tecnológicas, pesquisadores brasileiros têm se destacado no desenvolvimento de soluções sustentáveis para os desafios do século XXI. A crescente demanda por energia limpa, aliada à preocupação com o meio ambiente, tem impulsionado iniciativas voltadas à inovação ecológica, especialmente na região Norte do país.

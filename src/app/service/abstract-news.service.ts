@@ -9,4 +9,7 @@ export abstract class AbstractNewsService {
   abstract paginate(news: NewsItem[], currentPage: number, itemsPerPage: number): NewsItem[];
   abstract getHotNews(newsItems: NewsItem[]): NewsItem[];
   abstract getTotalPages(filtered: NewsItem[], itemsPerPage: number): number;
+  abstract updateViews(newsId: number): void;
+  abstract updateRating(newsId: number, stars: number): void;
+  abstract getRating(newsId: number): number;
 }
