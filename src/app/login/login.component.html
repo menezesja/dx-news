@@ -1,0 +1,22 @@
+<div class="page-wrapper">
+    <div class="login-container">
+        <img src="assets/logo-lg.png" alt="LG logo" class="logo">
+        <form (ngSubmit)="onLogin()">
+            <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="User" required />
+            <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Password" required />
+            <button type="submit">Login</button>
+
+            <!-- LINK PARA CADASTRO -->
+            <a href="/singup" class="register-link">Not registered? Register now</a>
+        </form>
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <img src="assets/logo-lgelectronics.png" alt="LG Electronics Logo" class="footer-logo">
+            <img src="assets/dx_logo.svg" alt="DX Logo" class="footer-logo">
+            <span class="footer-text">Copyright ⓒ2025 DX Academy</span>
+        </div>
+    </footer>
+</div>

@@ -1,0 +1,134 @@
+.create-news-container {
+    padding: 20px;
+    position: relative;
+    min-height: calc(100vh - 60px); // Ajuste para a altura da sua navbar
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5; // Fundo cinza claro
+  }
+  
+  .header-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative; // Para posicionar o welcome-section
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  
+    mat-icon {
+      font-size: 28px;
+      color: #333;
+    }
+  }
+  
+  .draft-status {
+    margin-left: 10px;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #666;
+  }
+  
+  .welcome-section {
+    position: absolute; // Posiciona absolutamente dentro do header-section
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .welcome-text {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .user-icon {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .form-section {
+    flex-grow: 1; // Ocupa o espaço restante
+    display: flex;
+    flex-direction: column;
+    gap: 20px; // Espaço entre os campos
+  }
+
+  input.input-image-url {
+    margin-bottom: 20px; // Espaçamento abaixo do campo de imagem
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1em;
+    box-sizing: border-box; // Inclui padding e borda na largura total
+    font-family: inherit; // Usa a fonte da aplicação
+  }
+  
+  input.input-title {
+    font-size: 2em;
+    font-weight: bold;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 5px;
+  }
+  
+  input.input-subtitle {
+    font-size: 1.3em;
+    color: #555;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 15px;
+  }
+  
+  textarea.textarea-content {
+    min-height: 300px; // Altura mínima para a área de texto
+    resize: vertical; // Permite redimensionar verticalmente
+    line-height: 1.6;
+  }
+  
+  /* Estilo para o botão de salvar flutuante */
+  .save-fab-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #A00030; // Cor do botão
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    mat-icon {
+      font-size: 28px;
+      margin: 0;
+      padding: 0;
+      line-height: 1;
+    }
+  
+    &:hover {
+      background-color: #B00040;
+    }
+  }

@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+<div class="news-container">
+  <div class="filters">
+    <button
+      class="tag"
+      *ngFor="let tag of tags"
+      (click)="goToTag(tag)">
+      {{ tag }}
+    </button>
+  </div>
+
+  <div class="news" *ngIf="selectedNews">
+    <h1 class="news-title">{{ selectedNews.title }}</h1>
+    <div class="news-meta">
+      <span class="author">{{ selectedNews.category }} por Professor Chiquinho</span>
+      <span class="date-time">{{ selectedNews.date }}</span>
+      <span class="views">
+        <img src="assets/view.svg" alt="views" class="view-icon" />
+        {{ selectedNews.views | shortNumber }} 
+      </span>
+    </div>
+    <img [src]="selectedNews.imageUrl" alt="{{ selectedNews.title }}" class="news-image" />
+    <p class="news-content">
+      {{ textoAleatorio }}
+    </p>
+
+    <div class="news-footer">
+      <div class="footer-line"></div>
+      <div class="footer-actions">
+        <div class="rating">
+          <span class="star filled"></span>
+          <span class="star filled"></span>
+          <span class="star filled"></span>
+          <span class="star filled"></span>
+          <span class="star"></span>
+          <span class="rating-count">4,1k</span>
+        </div>
+
+        <button class="share-button">
+          <img src="assets/share.svg" alt="Compartilhar">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!selectedNews">
+    <p style="text-align: center; margin-top: 2rem;">Notícia não encontrada.</p>
+  </div>
+</div>
+

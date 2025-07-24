@@ -1,0 +1,23 @@
+<app-navbar></app-navbar>
+<div class="create-news-container">
+    <div class="header-section">
+      <button class="back-button" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span class="draft-status">Draft</span>
+      <div class="welcome-section">
+        <span class="welcome-text">Welcome, {{ userName }}</span>
+        <mat-icon class="user-icon">person</mat-icon>
+      </div>
+    </div>
+  
+    <div class="form-section">
+      <input type="text" [(ngModel)]="newsDraft.title" placeholder="Title" class="input-title">
+      <input type="text" [(ngModel)]="newsDraft.subtitle" placeholder="Add a subtitle..." class="input-subtitle">
+      <input type="url" [(ngModel)]="newsDraft.imageUrl" placeholder="Image URL (e.g., https://example.com/image.jpg)" class="input-image-url">
+      <textarea [(ngModel)]="newsDraft.content" placeholder="Start writing..." class="textarea-content"></textarea>
+    </div>
+  
+    <button class="save-fab-button" (click)="saveDraft()">
+      <mat-icon>check</mat-icon> </button>
+  </div>
