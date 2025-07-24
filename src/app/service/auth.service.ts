@@ -1,18 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core'; 
+import { isPlatformBrowser } from '@angular/common'; 
 import { Observable, of } from 'rxjs';
-import { User } from '../model/user.model'; 
+import { User } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root' // Torna o serviço disponível em toda a aplicação
 })
 export class AuthService {
 
-  constructor() {}
+  private isBrowser: boolean; // Propriedade para armazenar o estado do ambiente
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    this.isBrowser = isPlatformBrowser(this.platformId); // Define se estamos no navegador
+  }
+
   /**
    * Realiza login fictício comparando credenciais com localStorage.
    * Retorna Observable<boolean> para manter compatibilidade com APIs futuras.
    */
   login(username: string, password: string): Observable<boolean> {
+    if (!this.isBrowser) { 
+      return of(false); 
+    }
+
     const users = this.getRegisteredUsers(); // Recupera todos os usuários cadastrados
     const userFound = users.find(user =>
       user.username === username && user.password === password
@@ -29,6 +39,10 @@ export class AuthService {
 
   //Registra novo usuário localmente, evitando duplicidade. Também usa Observable para facilitar futura conexão com API.
   register(username: string, email: string, password: string): Observable<boolean> {
+    if (!this.isBrowser) { 
+      return of(false);
+    }
+
     const users = this.getRegisteredUsers();
 
     // Verifica campos obrigatórios antes de prosseguir
@@ -52,23 +66,34 @@ export class AuthService {
 
   //Remove a sessão ativa do usuário.
   logout(): void {
-    localStorage.removeItem('currentUser');
+    if (this.isBrowser) {
+      localStorage.removeItem('currentUser');
+    }
   }
 
   //Verifica se há usuário logado.
   isLoggedIn(): boolean {
-    return localStorage.getItem('currentUser') !== null;
+    if (this.isBrowser) { 
+      return localStorage.getItem('currentUser') !== null;
+    }
+    return false; 
   }
 
   //Retorna dados do usuário atualmente logado.
   getCurrentUser(): User | null {
-    const userJSON = localStorage.getItem('currentUser');
-    return userJSON ? JSON.parse(userJSON) : null;
+    if (this.isBrowser) { 
+      const userJSON = localStorage.getItem('currentUser');
+      return userJSON ? JSON.parse(userJSON) : null;
+    }
+    return null; 
   }
 
   //Recupera a lista de usuários cadastrados no localStorage. Função auxiliar interna.
   private getRegisteredUsers(): User[] {
-    const usersJSON = localStorage.getItem('registeredUsers');
-    return usersJSON ? JSON.parse(usersJSON) : [];
+    if (this.isBrowser) { 
+      const usersJSON = localStorage.getItem('registeredUsers');
+      return usersJSON ? JSON.parse(usersJSON) : [];
+    }
+    return []; 
   }
 }
