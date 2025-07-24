@@ -60,6 +60,10 @@
     flex-direction: column;
     gap: 20px; // Espaço entre os campos
   }
+
+  input.input-image-url {
+    margin-bottom: 20px; // Espaçamento abaixo do campo de imagem
+  }
   
   input, textarea {
     width: 100%;
