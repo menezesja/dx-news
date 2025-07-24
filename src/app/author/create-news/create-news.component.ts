@@ -1,9 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../service/auth.service';
 
 export interface NewsDraft {
   id?: string;
@@ -14,6 +15,7 @@ export interface NewsDraft {
   author: string;
   createdAt: Date;
   updatedAt: Date;
+  imageUrl?: string;
 }
 
 @Component({
@@ -34,16 +36,31 @@ export class CreateNewsComponent implements OnInit {
     subtitle: '',
     content: '',
     status: 'Draft',
-    author: 'Teacher Chiquinho',
+    author: '',
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    imageUrl: '',
   };
 
-  constructor(private router: Router){}
+  private isBrowser: boolean;
+  userName: string | null = null;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID for SSR
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId); // Check if in browser
+  }
 
   ngOnInit(): void{
     // carregar um rascunho existente se estivesse editando
     // Por exemplo, se a rota fosse /admin/news/edit/:id
+
+    const currentUser = this.authService.getCurrentUser();
+    if(currentUser) {
+      this.userName = currentUser.username;
+    }
   }
 
   saveDraft(): void{
@@ -61,7 +78,7 @@ export class CreateNewsComponent implements OnInit {
         drafts[index] = this.newsDraft;
       }
     }
-    localStorage.setItem('newsDraft', JSON.stringify(drafts));
+    localStorage.setItem('newsDrafts', JSON.stringify(drafts));
     console.log('Rascunho salvo:', this.newsDraft);
     this.router.navigate(['/author/controller-news']); 
   }
