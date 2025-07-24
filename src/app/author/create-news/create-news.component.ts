@@ -20,7 +20,7 @@ export interface NewsDraft {
 }
 
 @Component({
-  selector: 'app-create-news.component',
+  selector: 'app-create-news',
   standalone:true,
   imports: [
     CommonModule,
@@ -58,8 +58,6 @@ export class CreateNewsComponent implements OnInit {
   }
 
   ngOnInit(): void{
-    // carregar um rascunho existente se estivesse editando
-    // Por exemplo, se a rota fosse /admin/news/edit/:id
 
     const currentUser = this.authService.getCurrentUser();
     if(currentUser) {
@@ -67,7 +65,7 @@ export class CreateNewsComponent implements OnInit {
     }
 
     this.routeSubscription = this.route.paramMap.subscribe(params => {
-      const draftId = params.get('id'); // Obtém o ID da URL (ex: /admin/news/edit/:id)
+      const draftId = params.get('id');
 
       if (draftId && this.isBrowser) { // Se há um ID e estamos no navegador
         const drafts = this.getDraftsFromLocalStorage();
@@ -104,7 +102,7 @@ export class CreateNewsComponent implements OnInit {
       subtitle: '',
       content: '',
       status: 'Draft',
-      author: this.authService.getCurrentUser()?.username || this.authService.getCurrentUser()?.username || 'Autor Desconhecido', // Preenche com o autor atual
+      author: this.authService.getCurrentUser()?.username || 'Autor Desconhecido', // Preenche com o autor atual
       createdAt: new Date(),
       updatedAt: new Date(),
       imageUrl: '',
