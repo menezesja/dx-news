@@ -2,9 +2,10 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
+import { Subscription } from 'rxjs';
 
 export interface NewsDraft {
   id?: string;
@@ -43,11 +44,14 @@ export class CreateNewsComponent implements OnInit {
   };
 
   private isBrowser: boolean;
+  private userSubscription: Subscription | null = null;
+  private routeSubscription: Subscription | null = null;
   userName: string | null = null;
 
   constructor(
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID for SSR
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId); // Check if in browser
@@ -61,26 +65,77 @@ export class CreateNewsComponent implements OnInit {
     if(currentUser) {
       this.userName = currentUser.username;
     }
+
+    this.routeSubscription = this.route.paramMap.subscribe(params => {
+      const draftId = params.get('id'); // Obtém o ID da URL (ex: /admin/news/edit/:id)
+
+      if (draftId && this.isBrowser) { // Se há um ID e estamos no navegador
+        const drafts = this.getDraftsFromLocalStorage();
+        const existingDraft = drafts.find(d => d.id === draftId);
+
+        if (existingDraft) {
+          // Carrega o rascunho existente no formulário
+          this.newsDraft = { ...existingDraft }; // Cria uma cópia para evitar modificações diretas
+          console.log('Editando rascunho:', this.newsDraft);
+        } else {
+          console.warn('Rascunho não encontrado para ID:', draftId);
+          // Opcional: Redirecionar para a página de criação ou lista se o rascunho não existir
+          this.router.navigate(['/admin/news/create']);
+        }
+      } else if (!draftId) {
+        // Se não há ID, é um NOVO rascunho, então redefinimos o formulário
+        this.resetFormForNewDraft();
+      }
+    });
   }
 
-  saveDraft(): void{
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
+  }
+
+  private resetFormForNewDraft(): void {
+    this.newsDraft = {
+      title: '',
+      subtitle: '',
+      content: '',
+      status: 'Draft',
+      author: this.authService.getCurrentUser()?.username || this.authService.getCurrentUser()?.username || 'Autor Desconhecido', // Preenche com o autor atual
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      imageUrl: '',
+    };
+  }
+  
+  saveDraft(): void {
+    if (!this.isBrowser) return;
+
     this.newsDraft.updatedAt = new Date();
 
-    // Por enquanto, simulação do salvamento no localStorage
-    // Mudar para um serviço/API
     const drafts = this.getDraftsFromLocalStorage();
-    if(!this.newsDraft.id){
-      this.newsDraft.id = 'draft-' + Date.now();
-      drafts.push(this.newsDraft);
-    }else{
-      const index = drafts.findIndex(d => d.id === this.newsDraft.id);
-      if (index > -1){
-        drafts[index] = this.newsDraft;
+    const draftToSave = { ...this.newsDraft }; // Cria uma cópia para garantir que não haja referências indesejadas
+
+    if (!draftToSave.id) { // Se não tem ID, é um NOVO rascunho
+      draftToSave.id = 'draft-' + Date.now(); // Gera um ID único
+      drafts.push(draftToSave);
+    } else { // Se já tem ID, é um rascunho EXISTENTE
+      const index = drafts.findIndex(d => d.id === draftToSave.id);
+      if (index > -1) {
+        drafts[index] = draftToSave; // Substitui o rascunho existente pelo atualizado
+      } else {
+        // Caso o ID exista, mas não foi encontrado na lista
+        drafts.push(draftToSave); // Adiciona como novo
       }
     }
     localStorage.setItem('newsDrafts', JSON.stringify(drafts));
-    console.log('Rascunho salvo:', this.newsDraft);
-    this.router.navigate(['/author/controller-news']); 
+
+    console.log('Rascunho salvo/atualizado:', this.newsDraft);
+
+    this.router.navigate(['/author/controller-news']); // Volta para a lista de rascunhos
   }
 
   goBack(): void{
