@@ -30,6 +30,125 @@
     flex-grow: 1; // Permite que o conteúdo principal ocupe o espaço restante
     // Adicione seus estilos para o conteúdo aqui
   }
+
+  .news-draft-card {
+    height: 100px;
+    background-color: white;
+    border: 1px solid #ddd; // Borda padrão cinza
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    align-items: flex-start;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out; // Adicione border-color
+    margin-bottom: 20px;
+    display: flex; // Já deve existir
+    align-items: flex-start; // Já deve existir
+    position: relative;
+
+    &:hover {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    // <<<<<< ESTILO PARA A BORDA VERMELHADA QUANDO FOR DRAFT
+    &.is-draft { // Usa a classe adicionada condicionalmente
+      border-color: #A00030; // Cor da borda avermelhada
+      // Você pode adicionar um box-shadow diferente ou leve sombreamento se desejar
+      // box-shadow: 0 0 0 1px #A00030 inset; // Exemplo de borda interna
+    }
+
+    .card-image {
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      display: flex; // Mantém flex para centralizar o ícone ou imagem
+      justify-content: center;
+      align-items: center;
+      margin-right: 15px;
+      overflow: hidden; // Garante que a imagem não transborde se for muito grande
+
+      mat-icon {
+        font-size: 48px;
+        color: #a00030;
+      }
+
+      // <<<<<< ESTILO PARA A IMAGEM DENTRO DO CARD-IMAGE
+      img {
+        width: 100%; // Faz a imagem ocupar 100% da largura do contêiner
+        height: 100%; // Faz a imagem ocupar 100% da altura do contêiner
+        object-fit: cover; // Corta a imagem para cobrir o contêiner sem distorcer
+      }
+    }
+  }
+
+  .card-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; // Espaça os itens verticalmente
+    min-height: 100px; // Garante uma altura mínima para o espaçamento funcionar
+    padding-bottom: 20px; // Adiciona espaço na parte inferior para o "Draft"
+    position: relative; // Para posicionar o ícone de edição absolutamente
+  }
+
+  .card-title {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #a00030;
+    margin-bottom: 5px;
+  }
+
+  .card-status-draft {
+    font-size: 0.85em;
+    color: #A00030;
+    font-weight: 600;
+    position: absolute; // Posiciona o "Draft" absolutamente
+    bottom: 0;
+    left: 0;
+    margin: 0; // Remova margens padrão para controle preciso
+    padding: 5px 8px; // Adicione um pequeno padding para destaque
+    border-radius: 0 5px 0 0; // Opcional: arredonda o canto inferior esquerdo
+    background-color: #ffebee; // Opcional: um fundo bem claro para o "Draft"
+  }
+
+  .card-author {
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 5px; // Adicione um pouco de espaço do título se o "Draft" não estiver presente
+  }
+
+  .edit-icon {
+    position: absolute; // Posiciona o ícone de edição absolutamente
+    bottom: 15px;
+    right: 5px;
+    font-size: 20px;
+    color: #888;
+    cursor: pointer;
+  }
+
+  .views {
+    position: absolute; // Posiciona o ícone de edição absolutamente
+    bottom: 15px;
+    right: 50px;
+    font-size: 20px;
+    color: #888;
+    cursor: pointer;
+  }
+
+  // ... seu CSS para .card-image, .card-details, .card-title, .card-author, etc. ...
+
+  // <<<<<< ESTILO PARA O TEXTO "DRAFT"
+  .card-status-draft {
+    font-size: 0.85em; // Tamanho um pouco menor
+    color: #A00030; // Cor avermelhada
+    font-weight: 600; // Negrito
+    margin-top: -3px; // Ajusta a posição para ficar mais perto do título
+    margin-bottom: 8px; // Espaçamento abaixo do "Draft"
+  }
   
   .fab-button {
     position: fixed;
