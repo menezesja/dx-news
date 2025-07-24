@@ -14,8 +14,8 @@ export const routes: Routes = [
   { path: 'admin/authors', component: ManagerAuthorComponent }, // Nova rota para autores
   { path: 'admin/news', component: ManagerNewsComponent },    
   { path: 'author/create-news', component: CreateNewsComponent },    
+  { path: 'author/create-news/edit/:id', component: CreateNewsComponent },    
   { path: 'author/controller-news', component: ControllerNewsComponent },
-  { path: 'author/creat-news/edit/:id', component: ManagerNewsComponent },    
   { path: 'login', component: LoginComponent },    
   { path: 'news/:id', component: NewsComponent }, 
   { path: 'singup', component: RegistrationComponent }  
