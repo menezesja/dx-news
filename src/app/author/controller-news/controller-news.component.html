@@ -5,17 +5,28 @@
       <mat-icon class="user-icon">person</mat-icon> </div>
   
     <div class="main-content">
-      <div class="news-draft-list">
-        <div class="news-draft-card" *ngFor="let draft of newsDrafts" (click)="viewDraft(draft.id)">
-          <div class="card-image">
-            <mat-icon>image</mat-icon> </div>
-          <div class="card-details">
-            <span class="card-title">{{ draft.title || '(Title)' }}</span>
-            <span class="card-status">{{ draft.status }}</span>
-            <span class="card-author">{{ draft.author }}</span>
-            <mat-icon class="edit-icon">edit</mat-icon>
-            <span class="views">15k <mat-icon>bar_chart</mat-icon></span> </div>
-        </div>
+      <div class="controller-news-container">
+        <div class="news-draft-list">
+          <div class="news-draft-card"
+              *ngFor="let draft of newsDrafts"
+              (click)="viewDraft(draft.id)"
+              [class.is-draft]="draft.status === 'Draft'">
+
+             <div class="card-image">
+              <img *ngIf="draft.imageUrl" [src]="draft.imageUrl" alt="News Image">
+              <mat-icon *ngIf="!draft.imageUrl">image</mat-icon>
+            </div>
+
+            <div class="card-details">
+              <span class="card-title">{{ draft.title || '(Title)' }}</span>
+
+              <span class="card-status-draft" *ngIf="draft.status === 'Draft'">Draft</span>
+              <span class="card-author">{{ draft.author }}</span>
+              <mat-icon class="edit-icon">edit</mat-icon>
+              <span class="views">15k <mat-icon>bar_chart</mat-icon></span> </div>
+          </div>  
+
+          </div>
       </div>
     </div>
   
