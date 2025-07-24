@@ -20,10 +20,10 @@ import { Subscription } from 'rxjs';
 })
 export class ControllerNewsComponent implements OnInit, OnDestroy{
 
-  newsDrafts: NewsDraft[] = []; // <<< ADD THIS PROPERTY
+  newsDrafts: NewsDraft[] = []; 
+  userName: string | null = null;
   private isBrowser: boolean; // For SSR check
   private routerSubscription: Subscription | null = null;
-  userName: string | null = null;
 
   constructor(
     private authService: AuthService,
@@ -61,8 +61,13 @@ export class ControllerNewsComponent implements OnInit, OnDestroy{
   }
 
   loadNewsDrafts(): void {
-    this.newsDrafts = this.getDraftsFromLocalStorage();
-    console.log('Rascunhos carregados:', this.newsDrafts); // Para depuração
+    if (this.isBrowser) {
+      const draftsJSON = localStorage.getItem('newsDrafts');
+      this.newsDrafts = draftsJSON ? JSON.parse(draftsJSON) : [];
+      console.log('Rascunhos carregados no ControllerNewsComponent:', this.newsDrafts);
+    } else {
+      this.newsDrafts = []; // Garante array vazia no servidor
+    }
   }
 
   goToCreateNews(): void {
@@ -71,15 +76,20 @@ export class ControllerNewsComponent implements OnInit, OnDestroy{
 
   viewDraft(draftId?: string): void {
     if (draftId) {
-      this.router.navigate(['/admin/news/edit', draftId]); // Assuming you'll add an 'edit' route
+      // Redireciona para a rota de edição com o ID
+      this.router.navigate(['/author/create-news/edit/', draftId]);
+    } else {
+      // Se por algum motivo o ID for null, redireciona para criar um novo
+      console.warn("ID do rascunho é nulo. Redirecionando para criação.");
+      this.router.navigate(['/author/create-news']);
     }
   }
 
-  private getDraftsFromLocalStorage(): NewsDraft[] {
-    if (this.isBrowser) {
-      const draftsJSON = localStorage.getItem('newsDrafts');
-      return draftsJSON ? JSON.parse(draftsJSON) : [];
-    }
-    return []; // Return empty array if not in browser (server-side)
-  }
+  // private getDraftsFromLocalStorage(): NewsDraft[] {
+  //   if (this.isBrowser) {
+  //     const draftsJSON = localStorage.getItem('newsDrafts');
+  //     return draftsJSON ? JSON.parse(draftsJSON) : [];
+  //   }
+  //   return []; // Return empty array if not in browser (server-side)
+  // }
 }
