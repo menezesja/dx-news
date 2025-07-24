@@ -77,7 +77,7 @@ export class ControllerNewsComponent implements OnInit, OnDestroy{
 
   private getDraftsFromLocalStorage(): NewsDraft[] {
     if (this.isBrowser) {
-      const draftsJSON = localStorage.getItem('newsDraft');
+      const draftsJSON = localStorage.getItem('newsDrafts');
       return draftsJSON ? JSON.parse(draftsJSON) : [];
     }
     return []; // Return empty array if not in browser (server-side)
