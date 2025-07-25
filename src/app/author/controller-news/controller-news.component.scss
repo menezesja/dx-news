@@ -31,8 +31,14 @@
     // Adicione seus estilos para o conteúdo aqui
   }
 
+  .news-draft-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .news-draft-card {
-    height: 100px;
+    height: 150px;
     background-color: white;
     border: 1px solid #ddd; // Borda padrão cinza
     border-radius: 8px;
@@ -43,9 +49,9 @@
     cursor: pointer;
     transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out; // Adicione border-color
     margin-bottom: 20px;
-    display: flex; // Já deve existir
     align-items: flex-start; // Já deve existir
     position: relative;
+    width: 60%;
 
     &:hover {
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
@@ -60,8 +66,8 @@
 
     .card-image {
       flex-shrink: 0;
-      width: 100px;
-      height: 100px;
+      width: 300px;
+      height: 150px;
       background-color: #f0f0f0;
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -89,10 +95,8 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; // Espaça os itens verticalmente
-    min-height: 100px; // Garante uma altura mínima para o espaçamento funcionar
-    padding-bottom: 20px; // Adiciona espaço na parte inferior para o "Draft"
-    position: relative; // Para posicionar o ícone de edição absolutamente
+    min-height: 150px; 
+    position: relative; 
   }
 
   .card-title {
@@ -100,6 +104,23 @@
     font-weight: bold;
     color: #a00030;
     margin-bottom: 5px;
+    margin-top: 10px;
+  }
+
+  .card-text-content {
+    font-size: 0.95em; // Tamanho da fonte do conteúdo
+    color: #555;      // Cor do texto
+    margin-top: 5px;   // Espaçamento do elemento acima
+    margin-bottom: 10px; // Espaçamento do elemento abaixo
+    line-height: 1.4; // Melhora a legibilidade do texto
+    width: 80%;
+    // Opcional: para garantir que o texto não quebre o layout
+    word-break: break-word; // Quebra palavras longas para evitar transbordamento
+    overflow: hidden; // Esconde qualquer texto que ultrapasse
+    text-overflow: ellipsis; // Adiciona "..." se o texto for muito longo para uma única linha (mas o slice já faz isso)
+    display: -webkit-box; // Para limitar o número de linhas
+    -webkit-line-clamp: 3; // Limita a 3 linhas (se a tela for muito pequena)
+    -webkit-box-orient: vertical;
   }
 
   .card-status-draft {
@@ -109,25 +130,28 @@
     position: absolute; // Posiciona o "Draft" absolutamente
     bottom: 0;
     left: 0;
-    margin: 0; // Remova margens padrão para controle preciso
+    margin-top: 20px;
     padding: 5px 8px; // Adicione um pequeno padding para destaque
     border-radius: 0 5px 0 0; // Opcional: arredonda o canto inferior esquerdo
     background-color: #ffebee; // Opcional: um fundo bem claro para o "Draft"
+    margin: 0; // Remova margens padrão para controle preciso
   }
 
-  .card-author {
-    font-size: 0.9em;
-    color: #888;
-    margin-top: 5px; // Adicione um pouco de espaço do título se o "Draft" não estiver presente
-  }
+  // .card-author {
+  //   font-size: 0.9em;
+  //   color: #888;
+  //   margin-top: 5px; 
+  // }
 
   .edit-icon {
     position: absolute; // Posiciona o ícone de edição absolutamente
-    bottom: 15px;
-    right: 5px;
-    font-size: 20px;
+    bottom: 60px;
+    right: 20px;
+    font-size: 30px;
     color: #888;
     cursor: pointer;
+    width: 30px;
+    height: 30px;
   }
 
   .views {
@@ -137,17 +161,6 @@
     font-size: 20px;
     color: #888;
     cursor: pointer;
-  }
-
-  // ... seu CSS para .card-image, .card-details, .card-title, .card-author, etc. ...
-
-  // <<<<<< ESTILO PARA O TEXTO "DRAFT"
-  .card-status-draft {
-    font-size: 0.85em; // Tamanho um pouco menor
-    color: #A00030; // Cor avermelhada
-    font-weight: 600; // Negrito
-    margin-top: -3px; // Ajusta a posição para ficar mais perto do título
-    margin-bottom: 8px; // Espaçamento abaixo do "Draft"
   }
   
   .fab-button {
