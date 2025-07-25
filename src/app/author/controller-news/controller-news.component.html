@@ -19,11 +19,12 @@
 
             <div class="card-details">
               <span class="card-title">{{ draft.title || '(Title)' }}</span>
+              <span class="card-text-content">{{ draft.content || '(History)' | slice:0:300 }}{{ draft.content && draft.content.length > 300 ? '...' : '' }}</span>
 
               <span class="card-status-draft" *ngIf="draft.status === 'Draft'">Draft</span>
-              <span class="card-author">{{ draft.author }}</span>
+              <!-- <span class="card-author">{{ draft.author }}</span> -->
               <mat-icon class="edit-icon">edit</mat-icon>
-              <span class="views">15k <mat-icon>bar_chart</mat-icon></span> </div>
+              <!-- <span class="views">15k <mat-icon>bar_chart</mat-icon></span> </div> -->
           </div>  
 
           </div>
