@@ -22,7 +22,8 @@ body {
 // LOGIN BOX ESTILO RETANGULAR
 .login-container {
     background-color: $color_bk_login;
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
     margin: auto;
     padding: 3rem 2rem;
     border-radius: 0.5rem;
@@ -31,46 +32,28 @@ body {
 }
 
 .logo {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 2rem;
+    width: 100%;
+    height: 100%;
+    margin-bottom: auto;
     object-fit: cover;
-    border-radius: 50%;
 }
 
 // FORMULÁRIO COM INPUTS NO ESTILO "UNDERLINE"
 form {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
 
-    input {
-        border: none;
-        border-bottom: 1px solid #999;
-        background: transparent;
-        padding: 0.4rem 0;
-        font-size: 1rem;
-        color: #333;
-
-        &::placeholder {
-            color: #aaa;
-            font-weight: 400;
-        }
-
-        &:focus {
-            outline: none;
-            border-bottom: 2px solid $color_btn;
-        }
+    .full-width{
+        width: 100%;
+        margin-bottom: auto;
     }
-
-    button {
-        margin-top: 1rem;
+    
+    .submit-login {
+        margin-top: auto;
         padding: 0.75rem 1.2rem; 
         font-size: 1rem;
-        font-weight: 600;
         background-color: $color_btn; 
         color: #fff;
-        border: none;
         border-radius: 999px; // deixa o botão completamente oval
         cursor: pointer;
         transition: background-color 0.3s ease;
@@ -80,8 +63,10 @@ form {
         }
     }
 
-    .register-link {
+    .forgot-password{
+        margin-left: auto;
         margin-top: auto;
+        margin-bottom: 1rem;
         font-size: 1rem;
         color: $color_link;
         text-decoration: none;
@@ -91,7 +76,20 @@ form {
             text-decoration: underline;
         }
     }
+
+    .register-link {
+        margin-top: 1rem;
+        align-self: center;
+        font-size: 1rem;
+        color: $color_link;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
+
 
 // FOOTER
 footer {
