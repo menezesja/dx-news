@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { NewsItem } from '../model/news.model';
 import { AbstractNewsService } from '../service/abstract-news.service';
+import { Footer } from '../footer/footer.component';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,8 @@ import { AbstractNewsService } from '../service/abstract-news.service';
   imports: [
     CommonModule,
     FormsModule,
-    NavbarComponent
+    NavbarComponent,
+    Footer
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
