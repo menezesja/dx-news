@@ -10,12 +10,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
+import { FooterSignup } from '../footer-signup/footer-signup.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, MatDialogModule, MatCardModule,
-            MatFormFieldModule,MatInputModule,MatButtonModule, MatIconModule],
+            MatFormFieldModule,MatInputModule,MatButtonModule, MatIconModule, FooterSignup],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

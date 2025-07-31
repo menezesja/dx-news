@@ -1,9 +1,7 @@
-/* src/app/footer/footer.component.scss */
-
 .app-footer {
   background-color: #2c2c3e; /* Cor de fundo escura, baseada na imagem */
   color: #ffffff; /* Cor do texto principal */
-  padding: 40px 20px 20px; /* Padding superior, lateral, inferior */
+  padding: 40px 20px 0 20px; /* Padding superior, lateral, inferior */
   font-family: Arial, sans-serif; /* Fonte genérica, ajuste se tiver uma fonte específica para o rodapé */
 }
 
@@ -75,10 +73,15 @@ h3 {
 
 .copyright-section {
   text-align: center;
-  padding-top: 20px;
   border-top: 1px solid #44445a; /* Linha divisória acima do copyright */
   font-size: 0.85em;
   color: #cccccc;
+  padding: 15px;
+
+  p{
+    margin: 0;
+  }
+
 }
 
 /* Responsividade básica */

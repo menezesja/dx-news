@@ -90,27 +90,3 @@ form {
     }
 }
 
-
-// FOOTER
-footer {
-    background-color: $color_bk_login;
-    padding: 1rem 2rem;
-    border-top: 1px solid $color_bk;
-
-    .footer-content {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-    }
-
-    .footer-logo {
-        height: 36px;
-        width: auto;
-    }
-
-    .footer-text {
-        font-size: 0.9rem;
-        color: #444;
-        white-space: nowrap;
-    }
-}
