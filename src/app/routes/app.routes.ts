@@ -7,6 +7,7 @@ import { ControllerNewsComponent } from '../author/controller-news/controller-ne
 import { LoginComponent } from '../login/login.component';
 import { NewsComponent } from '../news/news.component';
 import { RegistrationComponent } from '../registration/registration.component';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,5 +19,6 @@ export const routes: Routes = [
   { path: 'author/controller-news', component: ControllerNewsComponent },
   { path: 'login', component: LoginComponent },    
   { path: 'news/:id', component: NewsComponent }, 
-  { path: 'singup', component: RegistrationComponent }  
+  { path: 'singup', component: RegistrationComponent }, 
+  { path: 'login/forgot-password', component: ForgotPasswordComponent } 
 ];
