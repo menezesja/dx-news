@@ -1,0 +1,116 @@
+/* src/app/admin/manager-author/manager-author.component.scss */
+
+.authors-container {
+    padding: 20px;
+    background-color: #f5f5f5; // Fundo cinza claro
+    min-height: calc(100vh - 115px);
+  }
+  
+  .header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .authors-button {
+    background-color: #f0f0f0; // Cor de fundo do botão
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 10px 25px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+  
+  .welcome-admin-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .welcome-admin-text {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .admin-icon {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .authors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); // Grade responsiva
+    gap: 20px; // Espaço entre os cards
+    justify-content: center; // Centraliza a grade
+  }
+  
+  .author-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  
+    &:hover {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transform: translateY(-3px); // Efeito sutil ao passar o mouse
+    }
+  }
+  
+  .author-avatar {
+    width: 80px;
+    height: 80px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 50%; // Formato circular
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+  
+    mat-icon {
+      font-size: 25px;
+      color: #666;
+    }
+  }
+  
+  .author-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .author-stats {
+    display: flex;
+    align-items: center;
+    gap: 5px; // Espaço entre o número e os ícones
+    font-size: 0.9em;
+    color: #888;
+  
+    mat-icon {
+      font-size: 15px;
+      color: #888;
+      height: 16px;
+      width: 24px;
+    }
+  
+    .articles-count {
+      font-weight: bold;
+    }
+  }

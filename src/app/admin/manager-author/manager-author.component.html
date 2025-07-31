@@ -1,2 +1,21 @@
 <app-navbar></app-navbar>
-<p>Gerenciar Autores works!</p>
+<div class="authors-container">
+    <div class="header-controls">
+      <button class="authors-button" (click)="goToManageAuthors()">AUTHORS</button>
+      <div class="welcome-admin-section">
+        <span class="welcome-admin-text">Welcome, {{ adminName || 'Admin' }}</span>
+        <mat-icon class="admin-icon">person</mat-icon>
+      </div>
+    </div>
+  
+    <div class="authors-grid">
+      <div class="author-card" *ngFor="let author of authors" (click)="viewAuthorDetails(author.id)">
+        <div class="author-avatar">
+          <mat-icon>person</mat-icon> </div>
+        <span class="author-name">{{ author.name }}</span>
+        <div class="author-stats">
+          <span class="articles-count">{{ author.articlesCount }}</span>
+          <mat-icon class="articles-icon">description</mat-icon> <mat-icon class="profile-icon">person</mat-icon> </div>
+      </div>
+    </div>
+  </div>
