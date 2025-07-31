@@ -1,0 +1,106 @@
+/* src/app/footer/footer.component.scss */
+
+.app-footer {
+  background-color: #2c2c3e; /* Cor de fundo escura, baseada na imagem */
+  color: #ffffff; /* Cor do texto principal */
+  padding: 40px 20px 20px; /* Padding superior, lateral, inferior */
+  font-family: Arial, sans-serif; /* Fonte genérica, ajuste se tiver uma fonte específica para o rodapé */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around; /* Espaça as seções de contato e newsletter */
+  flex-wrap: wrap; /* Permite que as seções quebrem a linha em telas menores */
+  max-width: 1200px; /* Largura máxima do conteúdo do rodapé */
+  margin: 0 auto 30px; /* Centraliza e adiciona margem inferior */
+  gap: 30px; /* Espaçamento entre as colunas */
+}
+
+.contact-section,
+.newsletter-section {
+  flex: 1; /* Permite que as seções cresçam e encolham */
+  min-width: 280px; /* Largura mínima para evitar que fiquem muito estreitas */
+}
+
+h3 {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  color: #ffffff; /* Cor do título */
+  font-weight: bold;
+}
+
+.contact-section p {
+  margin-bottom: 5px;
+  font-size: 1em;
+  color: #e2e2e2;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column; /* Coloca input e botão em colunas */
+  gap: 10px; /* Espaçamento entre input e botão */
+}
+
+.email-input {
+  background-color: transparent; /* Fundo transparente */
+  border: none; /* Remove borda padrão */
+  border-bottom: 1px solid #ffffff; /* Borda inferior branca */
+  padding: 8px 0;
+  color: #ffffff; /* Cor do texto digitado */
+  font-size: 1em;
+  width: 100%; /* Ocupa toda a largura disponível */
+  outline: none; /* Remove o contorno ao focar */
+}
+
+.email-input::placeholder {
+  color: #aaaaaa; /* Cor do placeholder */
+}
+
+.subscribe-button {
+  background-color: transparent; /* Fundo transparente */
+  border: 1px solid #ffffff; /* Borda branca */
+  color: #ffffff; /* Cor do texto do botão */
+  padding: 10px 15px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%; /* Ocupa toda a largura disponível */
+}
+
+.subscribe-button:hover {
+  background-color: #a00030; /* Cor de destaque ao passar o mouse */
+  border-color: #a00030;
+  color: #ffffff;
+}
+
+.copyright-section {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #44445a; /* Linha divisória acima do copyright */
+  font-size: 0.85em;
+  color: #cccccc;
+}
+
+/* Responsividade básica */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column; /* Empilha as seções em telas menores */
+    align-items: center; /* Centraliza as seções */
+    text-align: center; /* Centraliza o texto */
+  }
+
+  .contact-section,
+  .newsletter-section {
+    min-width: unset; /* Remove largura mínima para se ajustar melhor */
+    width: 100%; /* Ocupa a largura total */
+  }
+
+  .newsletter-form {
+    align-items: center; /* Centraliza o formulário */
+  }
+
+  .email-input,
+  .subscribe-button {
+    max-width: 300px; /* Limita a largura dos inputs em telas pequenas */
+  }
+}
