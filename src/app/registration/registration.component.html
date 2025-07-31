@@ -1,16 +1,41 @@
 <div class="page-wrapper">
-    <div class="signup-container"> 
-        <img src="assets/logo-lg.png" alt="LG logo" class="logo">
-        <form (ngSubmit)="onRegister()">
-            <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Username" required />
-            <input type="email" id="email" name="email" [(ngModel)]="email" placeholder="Email" required />
-            <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Password" required />
-            <button type="submit">Register</button> 
+    <mat-card class="signup-container"> 
+        <img src="assets/logo-login.png" alt="register" class="logo">
+        <form [formGroup]="form" (ngSubmit)="onRegister()" class="register-form">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>User</mat-label>
+                <input matInput type="text" formControlName="username" placeholder="Ex. fulano.silva" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" placeholder="pat@example.com" />
+                <mat-error *ngIf="errorMessage()">{{ errorMessage() }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" />
+                <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility('password', $event)">
+                <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+                <mat-error *ngIf="passwordError()">{{ passwordError() }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput [type]="hideConfirmPassword() ? 'password' : 'text'" formControlName="confirmPassword" />
+                <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility('confirm', $event)">
+                    <mat-icon>{{ hideConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <button mat-flat-button type="submit" class="submit-register">Register</button> 
 
             <!-- LINK PARA LOGIN -->
             <a href="/login" class="login-link">Already registered? Log in</a>
         </form>
-    </div>
+    </mat-card>
 
     <footer>
         <div class="footer-content">
