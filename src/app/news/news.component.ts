@@ -26,12 +26,14 @@ export class NewsComponent {
   selectedRelatedNews?: NewsItem;
   selectedTag: string = '';
   tags: string[] = [];
-  textoAleatorio: string = ''; // teste temporário
+  radomText: string = ''; // teste temporário
+  formattedparagraphs: string[] = [];
   rating: number = 0;
 
   ngOnInit(): void {
     this.tags = this.newsService.tags;
-    this.textoAleatorio = this.gerarTextoLongo(); // teste temporário
+    this.radomText = this.generateLongText(); // teste temporário
+    this.formattedparagraphs = this.splitTextIntoParagraphs(this.radomText);
 
     const newsIdParam = this.route.snapshot.paramMap.get('id');
     const newsId = newsIdParam ? parseInt(newsIdParam, 10) : null;
@@ -73,7 +75,7 @@ export class NewsComponent {
   }
   
   // teste temporário
-  gerarTextoLongo(): string {
+  generateLongText(): string {
     return `
       Em um cenário de constantes transformações tecnológicas, pesquisadores brasileiros têm se destacado no desenvolvimento de soluções sustentáveis para os desafios do século XXI. A crescente demanda por energia limpa, aliada à preocupação com o meio ambiente, tem impulsionado iniciativas voltadas à inovação ecológica, especialmente na região Norte do país.
       Durante os últimos meses, projetos envolvendo biotecnologia e inteligência artificial têm ganhado notoriedade em instituições acadêmicas e startups da Amazônia. Um dos destaques recentes é um sistema inteligente de monitoramento da floresta que utiliza drones e sensores para coletar dados em tempo real, facilitando a preservação da biodiversidade.
@@ -83,4 +85,30 @@ export class NewsComponent {
     `.trim();
   }
 
+  splitTextIntoParagraphs(text: string, sentencesPerParagraph: number = 2): string[] {
+    const sentences = text
+      .split('.')
+      .map(s => s.trim())
+      .filter(s => s.length > 0)
+      .map(s => s + '.'); // adiciona o ponto de volta
+
+    const paragraphs: string[] = [];
+
+    for (let i = 0; i < sentences.length; i += sentencesPerParagraph) {
+      paragraphs.push(sentences.slice(i, i + sentencesPerParagraph).join(' '));
+    }
+
+    return paragraphs;
+  }
+
+
+  goToNews(id: number): void {
+    this.router.navigate(['/news', id]);
+  }
+
+  relatedNews(current: NewsItem): NewsItem[] {
+    return this.newsService.newsItems()
+      .filter(n => n.id !== current.id && n.category === current.category)
+      .slice(0, 3);
+  }
 }
