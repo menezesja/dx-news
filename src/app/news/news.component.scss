@@ -1,11 +1,9 @@
-//Paleta de cores
 $color-btn: #A50034;
 $color-titles: #1A1A1A;
 $color-tag: #FFFFFF;
 
 @use "sass:color";
 
-//Container principal da página
 .news-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -14,15 +12,38 @@ $color-tag: #FFFFFF;
   color: $color-titles;
 }
 
-//Área de tags
-.filters {
+.news-card {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: 2rem auto; // centraliza horizontalmente
+  max-width: 800px;  // define a largura máxima
+}
+
+.news {
   display: flex;
+  flex-direction: column;
   gap: 1rem;
-  margin-bottom: 1px;
-  flex-wrap: wrap;
+}
+
+.news-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-bottom: 2px solid $color-titles;
+  padding: 30px 30px 16px 30px;
+  gap: 1rem;
 }
 
 .tag {
+  display: inline-block; 
+  max-width: 150px;      
+  white-space: nowrap;   
+  overflow: hidden;      
+  text-overflow: ellipsis; 
+
   background-color: $color-titles;
   color: $color-tag;
   border-radius: 20px;
@@ -38,64 +59,60 @@ $color-tag: #FFFFFF;
   }
 }
 
-.news {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+
+.news-category {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $color-btn;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .news-title {
-  font-size: 2rem;
+  display: block;
+  font-size: 36px;
   font-weight: bold;
   color: $color-titles;
-  margin-bottom: 0.1rem; 
+  text-align: center;         // centraliza o texto
+  white-space: normal;        // permite quebra de linha
+  margin: 0;                  // remove margens extras
+  line-height: 1.2;
 }
 
+
 .news-meta {
-  font-size: 1rem;
-  color: $color-titles;
+  font-size: 0.95rem;
+  color: #707070;
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
   align-items: center;
-  position: relative;
-  padding-bottom: 0.7rem;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: $color-titles;
-  }
 
   .views {
     display: flex;
     align-items: center;
     gap: 0.3rem;
-    color: #707070;
-    margin-left: auto; 
+    margin-left: auto;
   }
 }
 
 .news-image {
-  width: 70%;
-  max-height: 350px;
+  max-width: 100%;
+  width: 500px;
+  height: 300px;
   object-fit: cover;
   margin: 0 auto; 
   display: block;
   border-radius: 12px;
-  object-fit: cover;
 }
 
 .news-content {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: $color-titles;
-  max-width: 90%; // Limita a largura do texto margin: 0 auto; // Centraliza na tela
+  font-size: 16px;
+  text-align: justify;
+  line-height: 1.5;
   margin: 0 auto;
+  color: $color-titles;
+  max-width: 70%;
+  text-align: justify-all;
 }
 
 .view-icon {
@@ -103,16 +120,9 @@ $color-tag: #FFFFFF;
   height: 18px;
 }
 
-.news-footer {
-  margin-top: 1px;
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
 .footer-line {
   position: relative;
+  margin-top: 2rem;
 
   &::after {
     content: '';
@@ -123,6 +133,13 @@ $color-tag: #FFFFFF;
     height: 2px;
     background-color: $color-titles;
   }
+}
+
+.news-footer {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .footer-actions {
@@ -157,7 +174,7 @@ $color-tag: #FFFFFF;
 }
 
 .share-button {
-  background-color: $color-btn; // vermelho da paleta
+  background-color: $color-btn;
   border: none;
   border-radius: 999px;
   width: 100px;
@@ -167,8 +184,6 @@ $color-tag: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  
-
   transition: background-color 0.3s ease;
   cursor: pointer;
 
@@ -178,6 +193,74 @@ $color-tag: #FFFFFF;
   }
 
   &:hover {
-    background-color: color.adjust($color_btn, $lightness: -6%);
+    background-color: color.adjust($color-btn, $lightness: -6%);
   }
 }
+
+.related-news {
+  margin-top: 3rem;
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .related-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: nowrap; // impede quebra de linha
+    overflow-x: auto;  // permite rolagem horizontal se necessário
+    padding-bottom: 1rem;
+  }
+
+  .related-item {
+    flex: 0 0 200px; // largura fixa para manter lado a lado
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+
+    .related-image {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.8rem;
+    }
+
+    .related-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: $color-titles;
+    }
+
+    .related-button {
+      background-color: $color-btn;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: color.adjust($color-btn, $lightness: -6%);
+      }
+    }
+  }
+}
+
