@@ -1,31 +1,35 @@
 <app-navbar></app-navbar>
 <div class="news-container">
-  <div class="filters">
-    <button
-      class="tag"
-      *ngFor="let tag of tags"
-      (click)="goToTag(tag)">
-      {{ tag }}
-    </button>
-  </div>
+  <div class="news-card" *ngIf="selectedNews">
+    <div class="news">
+      <div class="news-header">
+        <button class="tag" (click)="goToTag(selectedNews.category)">
+          {{ selectedNews.category }}
+        </button>
 
-  <div class="news" *ngIf="selectedNews">
-    <h1 class="news-title">{{ selectedNews.title }}</h1>
-    <div class="news-meta">
-      <span class="author">{{ selectedNews.category }} por Professor Chiquinho</span>
-      <span class="date-time">{{ selectedNews.date }}</span>
-      <span class="views">
-        <img src="assets/view.svg" alt="views" class="view-icon" />
-        {{ selectedNews.views | shortNumber }} 
-      </span>
+        <h1 class="news-title">{{ selectedNews.title }}</h1>
+
+        <div class="news-meta">
+          <span class="author">por {{selectedNews.author}}</span>
+          <span class="date-time">{{ selectedNews.date }}</span>
+          <span class="views">
+            <img src="assets/view.svg" alt="views" class="view-icon" />
+            {{ selectedNews.views | shortNumber }} 
+          </span>
+        </div>
+      </div>
+
+      <img [src]="selectedNews.imageUrl" alt="{{ selectedNews.title }}" class="news-image" />
+      <div class="news-content">
+        <p *ngFor="let paragraph of formattedparagraphs">
+          {{ paragraph }}
+        </p>
+      </div>
     </div>
-    <img [src]="selectedNews.imageUrl" alt="{{ selectedNews.title }}" class="news-image" />
-    <p class="news-content">
-      {{ textoAleatorio }}
-    </p>
+
+    <div class="footer-line"></div>
 
     <div class="news-footer">
-      <div class="footer-line"></div>
       <div class="footer-actions">
         <div class="rating">
           <span
@@ -42,10 +46,20 @@
         </button>
       </div>
     </div>
+
+    <div class="related-news">
+      <h2>Notícias Relacionadas</h2>
+      <div class="related-list">
+        <div class="related-item" *ngFor="let news of relatedNews(selectedNews)">
+          <img [src]="news.imageUrl" alt="{{ news.title }}" class="related-image" />
+          <h3 class="related-title">{{ news.title }}</h3>
+          <button class="related-button" (click)="goToNews(news.id)">Ver mais</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="!selectedNews">
     <p style="text-align: center; margin-top: 2rem;">Notícia não encontrada.</p>
   </div>
 </div>
-
