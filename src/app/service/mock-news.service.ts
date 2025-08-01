@@ -7,7 +7,8 @@ export class MockNewsService extends AbstractNewsService{
   private _newsItems = signal<NewsItem[]>([
     {
         id: 1,
-        title: 'Hyperautomation Presentations from DX Academy',
+        title: 'Apresentações de hiperautomação da DX Academy',
+        author: 'Professor Chiquinho',
         date: 'Jun 27, 2025',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
@@ -17,7 +18,41 @@ export class MockNewsService extends AbstractNewsService{
     },
     {
         id: 2,
-        title: 'Workshop on AI Integration',
+        title: 'Cientistas descobrem planta que “fala” com insetos',
+        author: 'Professor Chiquinho',
+        date: 'Jun 27, 2025',
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+        category: 'DX ACADEMY',
+        views: 900,
+        imageUrl: 'https://s2-oglobo.glbimg.com/5kLJIR5u9jctB3l4JIuvpuILgQk=/600x0/filters:quality(50)/https://i.s3.glbimg.com/v1/AUTH_da025474c0c44edd99332dddb09cabe8/internal_photos/bs/2025/b/H/PYpWEGT6GcrC3E9FaLUw/faustao-gpt.jpg',
+    },
+    {
+        id: 3,
+        title: 'Cidade brasileira testa semáforos com inteligência artificial',
+        author: 'Professor Chiquinho',
+        date: 'Jun 27, 2025',
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+        category: 'DX ACADEMY',
+        views: 900,
+        imageUrl: 'https://www.infomoney.com.br/wp-content/uploads/2025/04/Gm8d8AObYAImwUr-edited-1.jpeg?fit=1280%2C720&quality=50&strip=all',
+    },
+    {
+        id: 4,
+        title: 'O mistério dos peixes que caem do céu em Honduras',
+        author: 'Professor Chiquinho',
+        date: 'Jun 27, 2025',
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+        category: 'DX ACADEMY',
+        views: 900,
+        imageUrl: 'https://conectaja.proteste.org.br/wp-content/uploads/2025/04/trend-studio-ghibli-970x472.png',
+    },
+    {
+        id: 5,
+        title: 'Workshop sobre Integração de IA',
+        author: 'Professor Chiquinho',
         date: 'Jun 15, 2025',
         description:
             'Hands-on session with AI tools. Participants learned how to apply machine learning models Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Sed do eiusmod tempor incididunt ut labore et dolore magna aliquacccccc',
@@ -26,8 +61,9 @@ export class MockNewsService extends AbstractNewsService{
         imageUrl: 'https://picsum.photos/seed/workshop/100',
     },
     {
-        id: 3,
-        title: 'Visit to Robotics Center',
+        id: 6,
+        title: 'Visita ao Centro de Robótica',
+        author: 'Professor Chiquinho',
         date: 'Jun 20, 2025',
         description:
             'Explore the latest robotic technologies. The tour included demonstrations of autonomous systems. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
@@ -36,8 +72,9 @@ export class MockNewsService extends AbstractNewsService{
         imageUrl: 'https://picsum.photos/seed/robotics/100',
     },
     {
-        id: 4,
-        title: 'Production Line Automation',
+        id: 7,
+        title: 'Automação de linha de produção',
+        author: 'Professor Chiquinho',
         date: 'Jun 10, 2025',
         description:
             'Optimizing manufacturing workflows. The session covered implementation strategies for smart factories. The session covered implementation strategies for smart factories.The session covered implementation strategies for smart factories.',
@@ -46,8 +83,9 @@ export class MockNewsService extends AbstractNewsService{
         imageUrl: 'https://picsum.photos/seed/production/100',
     },
     {
-        id: 5,
-        title: 'Production Line Automation',
+        id: 8,
+        title: 'O mercado clandestino de diplomas universitários no Brasil',
+        author: 'Professor Chiquinho',
         date: 'Jun 10, 2025',
         description:
             'Optimizing manufacturing workflows. The session covered implementation strategies for smart factories. The session covered implementation strategies for smart factories.The session covered implementation strategies for smart factories.',
