@@ -5,6 +5,8 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { ShortNumberPipe } from './short-number.pipe';
 import { NewsItem } from '../model/news.model';
 import { AbstractNewsService } from '../service/abstract-news.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AlertDialogComponent } from '../feedback/alert-dialog.component';
 
 @Component({
   selector: 'app-news.component',
@@ -12,7 +14,8 @@ import { AbstractNewsService } from '../service/abstract-news.service';
   imports: [
     CommonModule,
     NavbarComponent,
-    ShortNumberPipe
+    ShortNumberPipe,
+    MatDialogModule
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss'
@@ -20,7 +23,8 @@ import { AbstractNewsService } from '../service/abstract-news.service';
 export class NewsComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private newsService = inject(AbstractNewsService); // ✅ injetando via abstração
+  private newsService = inject(AbstractNewsService); // injetando via abstração
+  private dialog = inject(MatDialog);
 
   selectedNews?: NewsItem;
   selectedRelatedNews?: NewsItem;
@@ -31,26 +35,29 @@ export class NewsComponent {
   rating: number = 0;
 
   ngOnInit(): void {
-    this.tags = this.newsService.tags;
-    this.radomText = this.generateLongText(); // teste temporário
-    this.formattedparagraphs = this.splitTextIntoParagraphs(this.radomText);
+    this.route.paramMap.subscribe(params => {
+      const newsIdParam = params.get('id');
+      const newsId = newsIdParam ? parseInt(newsIdParam, 10) : null;
 
-    const newsIdParam = this.route.snapshot.paramMap.get('id');
-    const newsId = newsIdParam ? parseInt(newsIdParam, 10) : null;
+      if (newsId !== null) {
+        const allNews = this.newsService.newsItems();
+        this.selectedNews = allNews.find(news => news.id === newsId);
 
-    if (newsId !== null) {
-      const allNews = this.newsService.newsItems();
-      this.selectedNews = allNews.find(news => news.id === newsId);
+        if (this.selectedNews) {
+          this.newsService.updateViews(this.selectedNews.id);
+          this.rating = this.newsService.getRating(this.selectedNews.id);
+          this.radomText = this.generateLongText(); // teste temporário
+          this.formattedparagraphs = this.splitTextIntoParagraphs(this.radomText);
 
-      if (this.selectedNews) {
-        this.newsService.updateViews(this.selectedNews.id);
-        this.rating = this.newsService.getRating(this.selectedNews.id);
+          //rola para o topo suavemente
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          this.router.navigate(['/']);
+        }
       } else {
         this.router.navigate(['/']);
       }
-    } else {
-      this.router.navigate(['/']);
-    }
+    });
   }
 
   goToTag(tag: string): void {
@@ -60,10 +67,19 @@ export class NewsComponent {
   }
 
   setRating(stars: number): void {
-    if (this.selectedNews) {
-      this.newsService.updateRating(this.selectedNews.id, stars);
-      this.rating = stars;
+    if (!this.selectedNews) return;
+
+    const existingRating = this.newsService.getRating(this.selectedNews.id);
+
+    if (existingRating > 0) {
+      this.dialog.open(AlertDialogComponent, {
+        data: { message: '⭐ Você já avaliou esta notícia!' }
+      });
+      return;
     }
+
+    this.newsService.updateRating(this.selectedNews.id, stars);
+    this.rating = stars;
   }
 
   shareNews(): void {
@@ -101,9 +117,8 @@ export class NewsComponent {
     return paragraphs;
   }
 
-
-  goToNews(id: number): void {
-    this.router.navigate(['/news', id]);
+  goToNews(news: NewsItem): void {
+    this.router.navigate(['news', news.id]);
   }
 
   relatedNews(current: NewsItem): NewsItem[] {
