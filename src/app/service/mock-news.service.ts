@@ -2,6 +2,10 @@ import { Injectable, Signal, computed, signal } from '@angular/core';
 import { NewsItem } from '../model/news.model';
 import { AbstractNewsService } from './abstract-news.service';
 
+function isBrowser(): boolean {
+  return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+}
+
 @Injectable()
 export class MockNewsService extends AbstractNewsService{
   private _newsItems = signal<NewsItem[]>([
@@ -92,7 +96,7 @@ export class MockNewsService extends AbstractNewsService{
         category: 'PRODUCTION',
         views: 1842,
         imageUrl: 'https://picsum.photos/seed/dxday/100',
-    },
+    }
   ]);
   
   newsItems: Signal<NewsItem[]> = computed(() => this._newsItems());
@@ -124,6 +128,8 @@ export class MockNewsService extends AbstractNewsService{
 
   //contabiliza visualizações
   override updateViews(newsId: number): void {
+    if (!isBrowser()) return;
+
     const localKey = `views-extra-${newsId}`;
     const extraViews = parseInt(localStorage.getItem(localKey) || '0', 10) + 1;
 
@@ -142,13 +148,14 @@ export class MockNewsService extends AbstractNewsService{
 
   //salva avaliação por estrelas
   override updateRating(newsId: number, stars: number): void {
+    if (!isBrowser()) return;
     const key = `rating-user-${newsId}`;
     localStorage.setItem(key, stars.toString());
   }
 
   //recupera avaliação salva
   override getRating(newsId: number): number {
+    if (!isBrowser()) return 0;
     return parseInt(localStorage.getItem(`rating-user-${newsId}`) || '0', 10);
   }
-
 }
