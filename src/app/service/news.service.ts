@@ -12,28 +12,31 @@ export class NewsService  extends AbstractNewsService {
     override filterNews(newsItems: NewsItem[], tag: string, query: string): NewsItem[] {
         throw new Error('Method not implemented.');
     }
-
     override paginate(news: NewsItem[], currentPage: number, itemsPerPage: number): NewsItem[] {
         throw new Error('Method not implemented.');
     }
-    
     override getHotNews(newsItems: NewsItem[]): NewsItem[] {
         throw new Error('Method not implemented.');
     }
-
     override getTotalPages(filtered: NewsItem[], itemsPerPage: number): number {
         throw new Error('Method not implemented.');
     }
-
     override updateViews(newsId: number): void {
         throw new Error('Method not implemented.');
     }
-
     override updateRating(newsId: number, stars: number): void {
         throw new Error('Method not implemented.');
     }
-
     override getRating(newsId: number): number {
+        throw new Error('Method not implemented.');
+    }
+    override getRelatedNews(current: NewsItem): NewsItem[] {
+        throw new Error('Method not implemented.');
+    }
+    override splitTextIntoParagraphs(text: string, sentencesPerParagraph: number): string[] {
+        throw new Error('Method not implemented.');
+    }
+    override generateLongText(): string {
         throw new Error('Method not implemented.');
     }
 }

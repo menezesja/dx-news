@@ -12,4 +12,7 @@ export abstract class AbstractNewsService {
   abstract updateViews(newsId: number): void;
   abstract updateRating(newsId: number, stars: number): void;
   abstract getRating(newsId: number): number;
+  abstract getRelatedNews(current: NewsItem): NewsItem[];
+  abstract splitTextIntoParagraphs(text: string, sentencesPerParagraph: number): string[];
+  abstract generateLongText(): string;
 }
