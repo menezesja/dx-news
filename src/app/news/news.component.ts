@@ -5,6 +5,8 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { ShortNumberPipe } from './short-number.pipe';
 import { NewsItem } from '../model/news.model';
 import { AbstractNewsService } from '../service/abstract-news.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AlertDialogComponent } from '../feedback/alert-dialog.component';
 
 @Component({
   selector: 'app-news.component',
@@ -12,7 +14,8 @@ import { AbstractNewsService } from '../service/abstract-news.service';
   imports: [
     CommonModule,
     NavbarComponent,
-    ShortNumberPipe
+    ShortNumberPipe,
+    MatDialogModule
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss'
@@ -20,35 +23,41 @@ import { AbstractNewsService } from '../service/abstract-news.service';
 export class NewsComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private newsService = inject(AbstractNewsService); // ✅ injetando via abstração
+  private newsService = inject(AbstractNewsService); // injetando via abstração
+  private dialog = inject(MatDialog);
 
   selectedNews?: NewsItem;
   selectedRelatedNews?: NewsItem;
   selectedTag: string = '';
   tags: string[] = [];
-  textoAleatorio: string = ''; // teste temporário
+  formattedparagraphs: string[] = [];
   rating: number = 0;
+  radomText: string = ''; // teste temporário
 
-  ngOnInit(): void {
-    this.tags = this.newsService.tags;
-    this.textoAleatorio = this.gerarTextoLongo(); // teste temporário
-
-    const newsIdParam = this.route.snapshot.paramMap.get('id');
-    const newsId = newsIdParam ? parseInt(newsIdParam, 10) : null;
-
-    if (newsId !== null) {
-      const allNews = this.newsService.newsItems();
-      this.selectedNews = allNews.find(news => news.id === newsId);
-
-      if (this.selectedNews) {
-        this.newsService.updateViews(this.selectedNews.id);
-        this.rating = this.newsService.getRating(this.selectedNews.id);
-      } else {
-        this.router.navigate(['/']);
-      }
-    } else {
-      this.router.navigate(['/']);
-    }
+  ngOnInit(): void { 
+    this.route.paramMap.subscribe(params => { 
+      const newsIdParam = params.get('id'); 
+      const newsId = newsIdParam ? parseInt(newsIdParam, 10) : null; 
+      
+      if (newsId !== null) { 
+        const allNews = this.newsService.newsItems(); 
+        this.selectedNews = allNews.find(news => news.id === newsId); 
+        
+        if (this.selectedNews) { 
+          this.newsService.updateViews(this.selectedNews.id); 
+          this.rating = this.newsService.getRating(this.selectedNews.id); 
+          this.radomText = this.newsService.generateLongText(); // teste temporário 
+          this.formattedparagraphs = this.newsService.splitTextIntoParagraphs(this.radomText, 2); 
+          
+          //rola para o topo suavemente 
+          window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        } else { 
+          this.router.navigate(['/']); 
+        } 
+      }else { 
+        this.router.navigate(['/']); 
+      } 
+    }); 
   }
 
   goToTag(tag: string): void {
@@ -58,10 +67,19 @@ export class NewsComponent {
   }
 
   setRating(stars: number): void {
-    if (this.selectedNews) {
-      this.newsService.updateRating(this.selectedNews.id, stars);
-      this.rating = stars;
+    if (!this.selectedNews) return;
+
+    const existingRating = this.newsService.getRating(this.selectedNews.id);
+
+    if (existingRating > 0) {
+      this.dialog.open(AlertDialogComponent, {
+        data: { message: '⭐ Você já avaliou esta notícia!' }
+      });
+      return;
     }
+
+    this.newsService.updateRating(this.selectedNews.id, stars);
+    this.rating = stars;
   }
 
   shareNews(): void {
@@ -72,15 +90,11 @@ export class NewsComponent {
     }
   }
   
-  // teste temporário
-  gerarTextoLongo(): string {
-    return `
-      Em um cenário de constantes transformações tecnológicas, pesquisadores brasileiros têm se destacado no desenvolvimento de soluções sustentáveis para os desafios do século XXI. A crescente demanda por energia limpa, aliada à preocupação com o meio ambiente, tem impulsionado iniciativas voltadas à inovação ecológica, especialmente na região Norte do país.
-      Durante os últimos meses, projetos envolvendo biotecnologia e inteligência artificial têm ganhado notoriedade em instituições acadêmicas e startups da Amazônia. Um dos destaques recentes é um sistema inteligente de monitoramento da floresta que utiliza drones e sensores para coletar dados em tempo real, facilitando a preservação da biodiversidade.
-      Além disso, empreendedores locais têm apostado em novos modelos de negócios focados no reaproveitamento de resíduos industriais. Essas soluções, que antes eram vistas como alternativas, agora se mostram viáveis economicamente e essenciais para a construção de um futuro mais equilibrado.
-      As ações também envolvem educação e inclusão digital. Escolas públicas têm recebido kits tecnológicos que permitem aulas interativas e fomentam o interesse dos alunos pela ciência. Especialistas apontam que essa aproximação entre juventude e inovação será um dos pilares para o desenvolvimento da região nos próximos anos.
-      Com apoio de instituições internacionais e investimento governamental, o Brasil mostra-se como protagonista no debate global sobre tecnologia sustentável. Os próximos capítulos dessa revolução prometem ainda mais integração entre ciência, sociedade e meio ambiente, com a Amazônia no centro das atenções mundiais.
-    `.trim();
+  goToNews(news: NewsItem): void {
+    this.router.navigate(['news', news.id]);
   }
 
+  relatedNews(current: NewsItem): NewsItem[] {
+    return this.newsService.getRelatedNews(current);
+  }
 }
