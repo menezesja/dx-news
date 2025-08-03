@@ -245,6 +245,12 @@ $color-tag: #FFFFFF;
       font-weight: 600;
       margin-bottom: 0.8rem;
       color: $color-titles;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 2;       // Limita a 2 linhas
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .related-button {

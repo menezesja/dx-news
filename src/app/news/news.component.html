@@ -53,13 +53,9 @@
         <div class="related-item" *ngFor="let news of relatedNews(selectedNews)">
           <img [src]="news.imageUrl" alt="{{ news.title }}" class="related-image" />
           <h3 class="related-title">{{ news.title }}</h3>
-          <button class="related-button" (click)="goToNews(news.id)">Ver mais</button>
+          <button class="related-button" (click)="goToNews(news)">Ver mais</button>
         </div>
       </div>
     </div>
-  </div>
-
-  <div *ngIf="!selectedNews">
-    <p style="text-align: center; margin-top: 2rem;">Notícia não encontrada.</p>
   </div>
 </div>
