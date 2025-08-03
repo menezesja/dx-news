@@ -12,12 +12,13 @@ import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FooterSignup } from '../footer-signup/footer-signup.component';
 
 @Component({
   selector: 'app-forgot-password',
   imports: [
     CommonModule, ReactiveFormsModule, MatDialogModule, MatCardModule,
-    MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule
+    MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FooterSignup
   ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
