@@ -15,4 +15,5 @@ export abstract class AbstractNewsService {
   abstract getRelatedNews(current: NewsItem): NewsItem[];
   abstract splitTextIntoParagraphs(text: string, sentencesPerParagraph: number): string[];
   abstract generateLongText(): string;
+  abstract getRecent(newsItems: NewsItem[]): NewsItem[];
 }

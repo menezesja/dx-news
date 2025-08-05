@@ -241,7 +241,7 @@ export class MockNewsService extends AbstractNewsService{
   }
   
   override getHotNews(newsItems: NewsItem[]): NewsItem[] {
-    return [...newsItems].sort((a, b) => b.views - a.views).slice(0, 3);
+    return [...newsItems].sort((a, b) => b.views - a.views).slice(0, 4);
   }
 
   override getTotalPages(filtered: NewsItem[], itemsPerPage: number): number {
@@ -301,5 +301,11 @@ export class MockNewsService extends AbstractNewsService{
     }
 
     return paragraphs;
+  }
+
+  override getRecent(newsItems: NewsItem[]): NewsItem[] {
+    return [...newsItems]
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 4); 
   }
 }

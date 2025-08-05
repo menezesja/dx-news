@@ -39,4 +39,7 @@ export class NewsService  extends AbstractNewsService {
     override generateLongText(): string {
         throw new Error('Method not implemented.');
     }
+    override getRecent(newsItems: NewsItem[]): NewsItem[] {
+        throw new Error('Method not implemented.');
+    }
 }
