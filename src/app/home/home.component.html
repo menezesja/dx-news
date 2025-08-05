@@ -1,5 +1,7 @@
 <app-navbar></app-navbar>
 <div class="news-container">
+
+  <!-- Filtros e busca -->
   <div class="filters">
     <button
       class="tag"
@@ -17,45 +19,86 @@
       (ngModelChange)="onSearchChange()" />
   </div>
 
-  <div class="content">
+  <!-- Destaque principal -->
+  <div class="highlight-card" *ngIf="highlightNews" (click)="goToNews(highlightNews)">
+    <div class="highlight-image-wrapper">
+      <img class="highlight-image" [src]="highlightNews.imageUrl" alt="Imagem de destaque" />
+    </div>
+    <div class="highlight-info">
+      <span class="highlight-category">{{ highlightNews.category }}</span>
+      <h1 class="highlight-title">{{ highlightNews.title }}</h1>
+      <p class="highlight-description">{{ highlightNews.description }}</p>
+      <span class="highlight-date">{{ highlightNews.date }}</span>
+    </div>
+  </div>
+
+  <!-- Lista paginada (se houver mais de 4 resultados) -->
+  <div class="news-carousel-wrapper vertical-list" *ngIf="isSearchOrTagActive() && highlightNews && searchResults.length > 1">
     <div class="news-list">
-      <div class="news-card" *ngFor="let news of paginatedNews" (click)="goToNews(news)">
-        <img class="news-image" [src]="news.imageUrl" alt="News image" />
-        <div class="news-info">
-          <h3>
-            {{ news.title }}
-            <span class="date">{{ news.date }}</span>
-          </h3>
-          <p>{{ news.description }}</p>
+      <div class="highlight-card" *ngFor="let news of paginatedSearchResults" (click)="goToNews(news)">
+        <div class="highlight-image-wrapper">
+          <img class="highlight-image" [src]="news.imageUrl" alt="Imagem de destaque" />
+        </div>
+        <div class="highlight-info">
+          <span class="highlight-category">{{ news.category }}</span>
+          <h1 class="highlight-title">{{ news.title }}</h1>
+          <p class="highlight-description">{{ news.description }}</p>
+          <span class="highlight-date">{{ news.date }}</span>
         </div>
       </div>
     </div>
 
-    <div class="hot-news">
-      <h2>
-        Hot News 
-        <img src="assets/logo-hotnews.svg" alt="Hot News Icon" class="icon-hot" />
-      </h2>
-      <div class="hot-news-box">
-        <div class="news-card" *ngFor="let hot of hotNews" (click)="goToNews(hot)">
-          <img class="news-image" [src]="hot.imageUrl" alt="News image" />
+    <div class="carousel-nav-wrapper" *ngIf="totalSearchPages > 1">
+      <button class="carousel-nav left" (click)="prevPage()" [disabled]="searchPage === 1">
+        &#10094;
+      </button>
+
+      <span class="carousel-page-indicator">Página {{ searchPage }} de {{ totalSearchPages }}</span>
+
+      <button class="carousel-nav right" (click)="nextPage()" [disabled]="searchPage === totalSearchPages">
+        &#10095;
+      </button>
+    </div>
+  </div>
+
+  <!-- Carrossel só aparece quando não há busca nem tag -->
+  <div class="news-carousel-wrapper" *ngIf="!isSearchOrTagActive() && carouselNews.length > 0">
+    <button class="carousel-nav left" (click)="scrollCarousel('left')">&#10094;</button>
+    <div class="news-carousel" #carousel>
+      <div class="news-card" *ngFor="let news of carouselNews" (click)="goToNews(news)">
+        <img class="news-image" [src]="news.imageUrl" alt="News image" />
+        <div class="news-info">
+          <h3>{{ news.title }}</h3>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-nav right" (click)="scrollCarousel('right')">&#10095;</button>
+  </div>
+
+  <!-- Seções inferiores -->
+  <div class="bottom-sections">
+    <div class="section-box">
+      <h3>Mais Vistas</h3>
+      <div class="news-row" *ngFor="let pair of groupNewsInPairs(hotNews)">
+        <div class="news-card" *ngFor="let news of pair" (click)="goToNews(news)">
           <div class="news-info">
-            <h3>
-              {{ hot.title }}
-              <span class="date">{{ hot.date }}</span>
-            </h3>
-            <p>{{ hot.description }}</p>
+            <h4>{{ news.title }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-box">
+      <h3>Recentes</h3>
+      <div class="news-row" *ngFor="let pair of groupNewsInPairs(recentNews)">
+        <div class="news-card" *ngFor="let news of pair" (click)="goToNews(news)">
+          <div class="news-info">
+            <h4>{{ news.title }}</h4>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="pagination">
-      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">← Previous</button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next →</button>
-  </div>
 </div>
-
 <app-footer></app-footer>
