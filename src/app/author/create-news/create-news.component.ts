@@ -6,6 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
 import { Subscription } from 'rxjs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { PublishConfirmationDialogComponent } from './publish-dialog.component';
 
 export interface NewsDraft {
   id?: string;
@@ -23,10 +25,7 @@ export interface NewsDraft {
   selector: 'app-create-news',
   standalone:true,
   imports: [
-    CommonModule,
-    NavbarComponent,
-    MatIconModule,
-    FormsModule
+    CommonModule, NavbarComponent, MatIconModule, FormsModule, MatDialogModule
   ],
   templateUrl: './create-news.component.html',
   styleUrl: './create-news.component.scss'
@@ -52,6 +51,7 @@ export class CreateNewsComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
+    private dialog: MatDialog, // Adicione MatDialog ao construtor
     @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID for SSR
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId); // Check if in browser
@@ -107,6 +107,25 @@ export class CreateNewsComponent implements OnInit {
       updatedAt: new Date(),
       imageUrl: '',
     };
+  }
+
+  openPublishDialog(): void {
+    const dialogRef = this.dialog.open(PublishConfirmationDialogComponent, {
+      width: '350px',
+      data: {
+        title: 'Publicar Notícia',
+        message: 'Tem certeza que deseja publicar esta notícia?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        console.log('Usuário confirmou a publicação. Fazer a lógica de publicação agora.');
+        // TODO: Implementar a lógica de publicação aqui
+      } else {
+        console.log('Usuário cancelou a publicação.');
+      }
+    });
   }
   
   saveDraft(): void {
