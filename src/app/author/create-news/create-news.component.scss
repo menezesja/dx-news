@@ -126,6 +126,39 @@
       margin: 0;
       padding: 0;
       line-height: 1;
+      padding-bottom: 6px;
+      padding-right: 3px;
+    }
+  
+    &:hover {
+      background-color: #B00040;
+    }
+  }
+  
+  .public-fab-button {
+    position: fixed;
+    bottom: 30px;
+    right: 100px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #A00030; // Cor do botão
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    mat-icon {
+      font-size: 28px;
+      margin: 0;
+      padding: 0;
+      line-height: 1;
+      padding-bottom: 6px;
+      padding-right: 3px;
     }
   
     &:hover {
