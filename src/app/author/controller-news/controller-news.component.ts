@@ -6,6 +6,8 @@ import { AuthService } from '../../service/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { NewsDraft } from '../create-news/create-news.component';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-controller-news',
@@ -28,6 +30,7 @@ export class ControllerNewsComponent implements OnInit, OnDestroy{
   constructor(
     private authService: AuthService,
     private router: Router,
+    private dialog: MatDialog,
     @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID for SSR
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId); // Check if in browser
@@ -58,6 +61,41 @@ export class ControllerNewsComponent implements OnInit, OnDestroy{
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
     }
+  }
+  
+  openDeleteDialog(draftId: string | undefined, event: Event): void {
+    event.stopPropagation();
+    
+    if (!draftId) {
+      console.warn("Draft ID is undefined. Cannot open delete dialog.");
+      return;
+    }
+    
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: '350px',
+      data: {
+        title: 'Apagar Rascunho',
+        message: 'Tem certeza que deseja apagar este rascunho? Esta ação não pode ser desfeita.'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        // CORREÇÃO: VERIFICAMOS draftId NOVAMENTE antes de chamar a função
+        if (draftId) {
+          this.deleteDraft(draftId);
+        }
+      }
+    });
+  }
+
+  deleteDraft(draftId: string): void {
+    if (!this.isBrowser) return;
+
+    this.newsDrafts = this.newsDrafts.filter(draft => draft.id !== draftId);
+    localStorage.setItem('newsDrafts', JSON.stringify(this.newsDrafts));
+
+    console.log('Rascunho apagado com sucesso:', draftId);
   }
 
   loadNewsDrafts(): void {

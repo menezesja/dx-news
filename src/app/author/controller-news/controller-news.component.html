@@ -23,7 +23,10 @@
 
               <span class="card-status-draft" *ngIf="draft.status === 'Draft'">Draft</span>
               <!-- <span class="card-author">{{ draft.author }}</span> -->
-              <mat-icon class="edit-icon">edit</mat-icon>
+              <!-- <mat-icon class="edit-icon">edit</mat-icon> -->
+                
+              <mat-icon class="delete-icon" (click)="openDeleteDialog(draft.id, $event)">delete_forever</mat-icon>
+              
               <!-- <span class="views">15k <mat-icon>bar_chart</mat-icon></span> </div> -->
           </div>  
 
