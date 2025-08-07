@@ -1,2 +1,29 @@
 <app-navbar></app-navbar>
-<p>Gerenciar Notícias works!</p>
+<div class="news-container">
+    <div class="header-controls">
+      <button class="news-button">NEWS</button>
+      <div class="welcome-admin-section">
+        <span class="welcome-admin-text">Welcome, {{ adminName || 'Admin' }}</span>
+        <mat-icon class="admin-icon">person</mat-icon>
+      </div>
+    </div>
+  
+    <div class="news-grid">
+      <div class="news-card" *ngFor="let news of newsList" (click)="readNews(news.id)">
+        <div class="news-image-container">
+          <img [src]="news.imageUrl" alt="News Image" class="news-image">
+        </div>
+        <div class="news-details">
+          <span class="news-title">{{ news.title }}</span>
+          <div class="author-info">
+            <span class="news-author">{{ news.author }}</span>
+            <mat-icon class="author-icon">person</mat-icon>
+          </div>
+          <div class="news-stats">
+            <span class="news-views">{{ news.views }}</span>
+            <mat-icon class="views-icon">bar_chart</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

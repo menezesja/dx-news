@@ -59,15 +59,14 @@ export class ManagerAuthor implements OnInit, OnDestroy {
     console.log('Autores carregados:', this.authors);
   }
 
-  // Método opcional: para navegar para detalhes de um autor
+  
   viewAuthorDetails(authorId: string): void {
     console.log('Ver detalhes do autor:', authorId);
-    // this.router.navigate(['/admin/authors', authorId]); // Exemplo de navegação para detalhes
+    // this.router.navigate(['/admin/authors', authorId]);
   }
 
-  // Método opcional: para gerenciar a criação/edição de autores
   goToManageAuthors(): void {
     console.log('Gerenciar autores');
-    // this.router.navigate(['/admin/authors/manage']); // Exemplo de navegação para gerenciamento
+    // this.router.navigate(['/admin/authors/manage']);
   }
 }
