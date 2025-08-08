@@ -24,3 +24,12 @@
     // width: auto;
   }
 }
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:visited {
+  color: white; /* Cor para links visitados */
+}
