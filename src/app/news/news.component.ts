@@ -86,7 +86,9 @@ export class NewsComponent {
     if (this.selectedNews) {
       const url = `${window.location.origin}/news/${this.selectedNews.id}`;
       navigator.clipboard.writeText(url);
-      alert('🔗 Link da notícia copiado!');
+      this.dialog.open(AlertDialogComponent, {
+        data: { message: '🔗 Link da notícia copiado!' }
+      });
     }
   }
   
